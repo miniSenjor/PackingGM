@@ -1,0 +1,66 @@
+﻿<Page x:Class="PackingGM.View.ManageRoleView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PackingGM.View"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ManageRoleView">
+
+    <Grid Background="{DynamicResource BackgroundBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Row="0">
+            <Button Command="{Binding BackCommand}"
+                    DockPanel.Dock="Left"
+                    Height="40"
+                    VerticalAlignment="Top">
+                Назад
+            </Button>
+            <StackPanel DockPanel.Dock="Top">
+                <TextBlock Text="Управление ролями"
+                           Style="{DynamicResource TextBlockStyle}"
+                           FontSize="26" 
+                           Grid.Row="1"/>
+                <Button Command="{Binding SaveCommand}"
+                        Style="{DynamicResource ButtonStyle}"
+                        Background="{DynamicResource BackgroundBrush}"
+                        Width="150">
+                    Сохранить изменения
+                </Button>
+                <Button Command="{Binding CreateRoleCommand}"
+                        Style="{DynamicResource ButtonStyle}"
+                        Background="{DynamicResource BackgroundBrush}"
+                        Width="150">
+                    Создать роль
+                </Button>
+                <Button Command="{Binding ChangeThemeCommand}"
+                        Foreground="{DynamicResource ForegroundBrush}"
+                        Background="{DynamicResource BackgroundBrush}"
+                        Width="150">
+                    Сменить тему
+                </Button>
+            </StackPanel>
+        </DockPanel>
+        <ListView ItemsSource="{Binding Roles}" Grid.Row="1" 
+                  ScrollViewer.HorizontalScrollBarVisibility="Auto">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Name}"/>
+                        <TextBlock Text=" Просмотр"/>
+                        <CheckBox IsChecked="{Binding IsAlowedViewing}"/>
+                        <TextBlock Text=" Редактирование"/>
+                        <CheckBox IsChecked="{Binding IsAlowedWriting}"/>
+                        <TextBlock Text=" Администрирование"/>
+                        <CheckBox IsChecked="{Binding IsAlowedAdmining}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+    </Grid>
+</Page>
