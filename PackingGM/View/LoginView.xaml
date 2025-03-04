@@ -12,14 +12,14 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
             <RowDefinition/>
+            <RowDefinition Height="15"/>
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0"
                    Style="{DynamicResource TextBlockStyle}"
                    FontSize="30"
                    HorizontalAlignment="Center"
-                   VerticalAlignment="Center">
-            Вход
-        </TextBlock>
+                   VerticalAlignment="Center"
+                   Text="Вход"/>
         <StackPanel Grid.Row="1"
                     Width="300">
             <DockPanel>
@@ -41,9 +41,14 @@
                          HorizontalAlignment="Right"/>
             </DockPanel>
             <Button Command="{Binding EnterCommand}"
-                    Style="{DynamicResource ButtonStyle}">
-                Войти
-            </Button>
+                    Style="{DynamicResource ButtonYesStyle}"
+                    Content="Войти"
+                    IsEnabled="{Binding CanLogin}"/>
         </StackPanel>
+        <TextBlock Text="{Binding State}"
+                   Grid.Row="2"
+                   Background="{Binding StateColor}"
+                   Foreground="White"
+                   FontFamily="Segoe UI"/>
     </Grid>
 </Page>

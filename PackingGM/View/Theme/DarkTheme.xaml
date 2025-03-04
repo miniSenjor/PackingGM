@@ -1,25 +1,56 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:PackingGM.View.Theme">
+    <Style x:Key="PageStyle" TargetType="Page">
+        <Setter Property="Background" Value="{DynamicResource MainGrayBrush}" />
+    </Style>
     <Style x:Key="TextBlockStyle" TargetType="TextBlock">
-        <Setter Property="Background" Value="#2e2e32" />
+        <Setter Property="Background" Value="{DynamicResource MainGrayBrush}" />
         <Setter Property="Foreground" Value="White" />
         <Setter Property="FontFamily" Value="Segoe UI Black"/>
     </Style>
-    <Style x:Key="PageStyle" TargetType="Page">
-        <Setter Property="Background" Value="#2e2e32" />
-    </Style>
-    <Style x:Key="ButtonStyle" TargetType="Button">
-        <Setter Property="Background" Value="#00c000" />
+    <Style x:Key="TextBlockStyleBlue" TargetType="TextBlock">
+        <Setter Property="Background" Value="{DynamicResource BlueBrush}"/>
         <Setter Property="Foreground" Value="White" />
-        <Setter Property="BorderBrush" Value="Gray" />
+        <Setter Property="FontFamily" Value="Segoe UI Black"/>
     </Style>
-    <Color x:Key="BackgroundColor">#252526</Color>
+    <Style x:Key="ButtonYesStyle" TargetType="Button">
+        <Setter Property="Background" Value="{DynamicResource GrayBrush}"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource BlueBrush}"/>
+        <Setter Property="FontFamily" Value="Segoe UI"/>
+    </Style>
+    <Style x:Key="ButtonNoStyle" TargetType="Button">
+        <Setter Property="Background" Value="{DynamicResource GrayBrush}"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource LightGrayBrush}"/>
+        <Setter Property="FontFamily" Value="Segoe UI"/>
+    </Style>
+    <Style x:Key="ListViewStyle" TargetType="ListView">
+        <Setter Property="Background" Value="{DynamicResource GrayBrush}"/>
+    </Style>
+    
+    <!--Основные цвета-->
+    <!--Обводка и нижняя панель-->
+    <SolidColorBrush x:Key="BlueBrush" Color="#FF007ACC"/>
+    <!--Второстепенный задний цвет-->
+    <SolidColorBrush x:Key="DarkGrayBrush" Color="#FF252526"/>
+    <!--Основной задний цвет-->
+    <SolidColorBrush x:Key="GrayBrush" Color="#FF3F3F46"/>
+    <!--Обводка-->
+    <SolidColorBrush x:Key="LightGrayBrush" Color="#FF999999"/>
+    <SolidColorBrush x:Key="MainGrayBrush" Color="#FF2D2D30"/>
+    <SolidColorBrush x:Key="OrangeBrush" Color="#FFCA5100"/>
+    <SolidColorBrush x:Key="RedBrush" Color="#FFE62B1A"/>
+
+
+
+
     <Color x:Key="ForegroundColor">#FFFFF1</Color>
     <Color x:Key="GreenColor">#00c000</Color>
-    <Color x:Key="GrayColor">#343434</Color>
+    <Color x:Key="GrayColor2">#343434</Color>
     <Color x:Key="BlackColor">#2e2e32</Color>
     <Color x:Key="GrayWhiteColor">#727577</Color>
-    <SolidColorBrush x:Key="BackgroundBrush" Color="{DynamicResource BackgroundColor}"/>
+    <SolidColorBrush x:Key="BackgroundBrush" Color="{DynamicResource GrayColor2}"/>
     <SolidColorBrush x:Key="ForegroundBrush" Color="{DynamicResource ForegroundColor}"/>
 </ResourceDictionary>

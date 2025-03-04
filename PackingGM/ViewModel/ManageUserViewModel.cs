@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.ComponentModel;
 using System.Windows;
 
 namespace PackingGM.ViewModel
@@ -18,15 +19,10 @@ namespace PackingGM.ViewModel
             {
                 _context = App.GetContext();
                 Users = new ObservableCollection<User>(_context.Users.ToList());
-                //using (AppDb db = new AppDb())
-                //{
-                //    Roles = new ObservableCollection<Role>(db.Roles.ToList());
-                //}
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
-                //сделать только если нет подключения к бд
                 Users = new ObservableCollection<User>();
                 for (int i = 1; i < 5; i++)
                     Users.Add(new User(i));
@@ -60,11 +56,6 @@ namespace PackingGM.ViewModel
         {
             try
             {
-                //using (AppDb db = new AppDb())
-                //{
-                //    db.Entry(Roles).State = EntityState.Modified;
-                //    db.SaveChanges();
-                //}
                 _context.SaveChanges();
                 MessageBox.Show("Успешно сохранено");
             }

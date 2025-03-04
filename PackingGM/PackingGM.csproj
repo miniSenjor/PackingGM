@@ -79,6 +79,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Manufactory.cs" />
+    <Compile Include="Model\StateApp.cs" />
     <Compile Include="Model\Test.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\ChangeUserWindowModel.cs" />
