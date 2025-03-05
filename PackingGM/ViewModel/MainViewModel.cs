@@ -40,6 +40,8 @@ namespace PackingGM.ViewModel
         }
         private void OpenChangeUser(object obj)
         {
+            MainWindow main = new MainWindow();
+            //main.ShowDialog();
             Navigation.Navigate(new ManageUserView());
         }
     }

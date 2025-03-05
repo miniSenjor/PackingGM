@@ -33,6 +33,12 @@ namespace PackingGM.Data
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Role>()
+                        .Property(u => u.Version)
+                        .IsConcurrencyToken();
+            //modelBuilder.Entity<Role>()
+            //.Property(u => u.RowVersion)
+            //.IsRowVersion();
             //modelBuilder.Entity<User>().ToTable("Useres");
             // Указываем схему "public" по умолчанию для всех таблиц
             //modelBuilder.HasDefaultSchema("public");

@@ -3,24 +3,47 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Media;
+using System.ComponentModel;
+using PackingGM.ViewModel;
+using System.Windows.Controls;
 
 namespace PackingGM.Model
 {
-    public class StateApp
+    public class StateApp : BaseModel
     {
         public StateApp(string state = "Готово")
         {
             Text = state;
             Color = (SolidColorBrush)App.Current.Resources["BlueBrush"];
         }
-        public static string Text { get; set; }
-        public static SolidColorBrush Color { get; set; }
-        public static void ChangeAll(string text, string color)
+        private static readonly StateApp _instance = new StateApp();
+        public static StateApp Instance => _instance;
+        private string _text;
+        public string Text
+        {
+            get => _text;
+            set
+            {
+                _text = value;
+                OnPropertyChanged(nameof(Text));
+            }
+        }
+        private SolidColorBrush _color;
+        public SolidColorBrush Color
+        {
+            get => _color;
+            set
+            {
+                _color = value;
+                OnPropertyChanged(nameof(Color));
+            }
+        }
+        public void ChangeAll(string text, string color)
         {
             Text = text;
             ChangeColor(color);
         }
-        public static void ChangeColor(string color)
+        public void ChangeColor(string color)
         {
             switch (color.ToLower())
             {

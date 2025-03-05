@@ -77,6 +77,10 @@
     <Compile Include="Migrations\202502270854364_InitialCreate1.Designer.cs">
       <DependentUpon>202502270854364_InitialCreate1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202503050542170_AddVersion.cs" />
+    <Compile Include="Migrations\202503050542170_AddVersion.Designer.cs">
+      <DependentUpon>202503050542170_AddVersion.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Manufactory.cs" />
     <Compile Include="Model\StateApp.cs" />
@@ -173,6 +177,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202502270854364_InitialCreate1.resx">
       <DependentUpon>202502270854364_InitialCreate1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202503050542170_AddVersion.resx">
+      <DependentUpon>202503050542170_AddVersion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

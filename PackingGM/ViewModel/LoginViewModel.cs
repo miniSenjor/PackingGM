@@ -41,24 +41,6 @@ namespace PackingGM.ViewModel
         private readonly BackgroundWorker _worker;
         private bool _isConnected = false;
         public User LogUser { get; set; } = new User();
-        public string State
-        {
-            get => StateApp.Text;
-            set
-            {
-                StateApp.Text = value;
-                OnPropertyChanged(nameof(State));
-            }
-        }
-        public SolidColorBrush StateColor
-        {
-            get => StateApp.Color;
-            set
-            {
-                StateApp.Color = value;
-                OnPropertyChanged(nameof(StateColor));
-            }
-        }
 
         private bool _isBusy;
         public bool IsBusy
@@ -91,11 +73,11 @@ namespace PackingGM.ViewModel
             }
             catch (TimeoutException ex)
             {
-                e.Result = new TimeoutException("Время ответа сервера превышено. Попробуйте повторить операцию чуть позже");
+                e.Result = new TimeoutException("Время ответа превышено. Попробуйте повторить операцию чуть позже");
             }
             catch (InvalidOperationException ex)
             {
-                MessageBox.Show(ex.ToString());
+                e.Result = ex;
             }
         }
         private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -105,20 +87,17 @@ namespace PackingGM.ViewModel
             if (e.Error != null)
             {
                 MessageBox.Show(e.Error.Message);
-                State = "Ошибка: " + e.Error.Message;
-                StateColor = (SolidColorBrush)App.Current.Resources["RedBrush"];
+                StateApp.Instance.ChangeAll("Ошибка: " + e.Error.Message, "red");
             }
             else if (e.Result is Exception ex)
             {
                 MessageBox.Show(ex.ToString());
-                State = "Ошибка: " + ex.ToString();
-                StateColor = (SolidColorBrush)App.Current.Resources["RedBrush"];
+                StateApp.Instance.ChangeAll("Ошибка: " + ex.Message, "red");
 
             }
             else if ((bool)e.Result)
             {
-                State = "Успешный вход!";
-                StateColor = (SolidColorBrush)App.Current.Resources["BlueBrush"];
+                StateApp.Instance.ChangeAll("Успешный вход!", "blue");
                 Navigation.Navigate(new MainView());
             }
         }
@@ -146,8 +125,7 @@ namespace PackingGM.ViewModel
                 return;
             }
             IsBusy = true;
-            State = "Проверка пользователя...";
-            StateColor = (SolidColorBrush)App.Current.Resources["BlueBrush"];
+            StateApp.Instance.ChangeAll("Проверка пользователя...", "blue");
             _worker.RunWorkerAsync();
         }
 

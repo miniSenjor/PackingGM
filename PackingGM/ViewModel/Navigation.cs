@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Diagnostics;
+using System.Windows.Controls;
 
 namespace PackingGM.ViewModel
 {
@@ -24,7 +25,11 @@ namespace PackingGM.ViewModel
         /// <param name="page">Новая страница</param>
         public static void Navigate(Page page)
         {
+            //_mainFrame.Content = null;
             _mainFrame.Content = page;
+            //Debug.Print(_mainFrame.CanGoBack.ToString());
+            //_mainFrame.NavigationService.RemoveBackEntry();
+            //Debug.Print(_mainFrame.CanGoBack.ToString());
         }
 
         /// <summary>

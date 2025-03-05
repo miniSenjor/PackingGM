@@ -3,10 +3,19 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PackingGM"
+        xmlns:local="clr-namespace:PackingGM.View"
+        xmlns:model="clr-namespace:PackingGM.Model"
         xmlns:viewModel="clr-namespace:PackingGM.ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type viewModel:MainViewModel}">
+            <local:MainView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:ManageRoleViewModel}">
+            <local:ManageRoleView />
+        </DataTemplate>
+    </Window.Resources>
     <!--<Window.DataContext>-->
         <!-- Указываем ViewModel -->
     <!--<viewModel:MainWindowModel />-->
@@ -14,7 +23,13 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
+            <RowDefinition Height="16"/>
         </Grid.RowDefinitions>
         <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Grid.Row="0"/>
+        <TextBlock Text="{Binding Source={x:Static model:StateApp.Instance}, Path=Text}"
+                   Grid.Row="1"
+                   Background="{Binding Source={x:Static model:StateApp.Instance}, Path=Color}"
+                   Foreground="White"
+                   FontFamily="Segoe UI"/>
     </Grid>
 </Window>

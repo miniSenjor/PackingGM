@@ -64,8 +64,5 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <TextBlock Text="{Binding StateApp}"
-                   Grid.Row="2"
-                   Style="{DynamicResource TextBlockStyleBlue}"/>
     </Grid>
 </Page>

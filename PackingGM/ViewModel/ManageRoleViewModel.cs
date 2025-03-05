@@ -10,6 +10,7 @@ using System.Text;
 using System.Security.Cryptography;
 using System.Diagnostics;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 
 namespace PackingGM.ViewModel
 {
@@ -62,13 +63,26 @@ namespace PackingGM.ViewModel
         {
             try
             {
-                //using (AppDb db = new AppDb())
-                //{
-                //    db.Entry(Roles).State = EntityState.Modified;
-                //    db.SaveChanges();
-                //}
                 _context.SaveChanges();
                 MessageBox.Show("Успешно сохранено");
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                var entry = ex.Entries.Single();
+                var databaseValues = entry.GetDatabaseValues();
+                var clientValues = entry.Entity;
+
+                if (databaseValues == null)
+                {
+                    MessageBox.Show("Редактируемая запись была удалена другим пользователем.");
+                }
+                else
+                {
+                    var updatedRole = (Role)databaseValues.ToObject();
+                    MessageBox.Show($"Запись была изменена другим пользователем. Текущие данные:{updatedRole.Name} Просмотр{updatedRole.IsAlowedViewing} Редактирование{updatedRole.IsAlowedWriting} Администрирование{updatedRole.IsAlowedAdmining}");
+                    // Обновите данные на клиенте
+                    entry.OriginalValues.SetValues(databaseValues);
+                }
             }
             catch (Exception ex)
             {
@@ -89,7 +103,11 @@ namespace PackingGM.ViewModel
 
         private void CreateRole(object obj)
         {
-
+            Roles = new ObservableCollection<Role>(_context.Roles.ToList());
+            foreach(Role role in _context.Roles.ToList())
+            {
+                Debug.Print(role.Name + role.IsAlowedViewing.ToString() + role.IsAlowedWriting.ToString() + role.IsAlowedAdmining.ToString());
+            }
         }
         //private ManageTheme mt = new ManageTheme();
         private RelayCommand _changeThemeCommand;

@@ -101,6 +101,10 @@ namespace PackingGM.Model
                 //SetField(ref _isAlowedAdmining, value);
             }
         }
+        [ConcurrencyCheck]
+        public int Version { get; set; }
+        //[Timestamp]
+        //public byte[] RowVersion { get; set; }
         public ICollection<User> Users { get; set; }
     }
 }

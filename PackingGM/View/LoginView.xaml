@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:PackingGM.View"
+      xmlns:model="clr-namespace:PackingGM.Model"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="LoginView"
@@ -12,7 +13,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
             <RowDefinition/>
-            <RowDefinition Height="15"/>
+            <RowDefinition Height="16"/>
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0"
                    Style="{DynamicResource TextBlockStyle}"
@@ -45,10 +46,5 @@
                     Content="Войти"
                     IsEnabled="{Binding CanLogin}"/>
         </StackPanel>
-        <TextBlock Text="{Binding State}"
-                   Grid.Row="2"
-                   Background="{Binding StateColor}"
-                   Foreground="White"
-                   FontFamily="Segoe UI"/>
     </Grid>
 </Page>
