@@ -81,10 +81,27 @@
     <Compile Include="Migrations\202503050542170_AddVersion.Designer.cs">
       <DependentUpon>202503050542170_AddVersion.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202503120549318_MainCreateTable.cs" />
+    <Compile Include="Migrations\202503120549318_MainCreateTable.Designer.cs">
+      <DependentUpon>202503120549318_MainCreateTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Model\Aggregate.cs" />
+    <Compile Include="Model\AggregateType.cs" />
+    <Compile Include="Model\GM.cs" />
+    <Compile Include="Model\DrawingNameAggregate.cs" />
+    <Compile Include="Model\DrawingNameAggregateD3.cs" />
     <Compile Include="Model\Manufactory.cs" />
+    <Compile Include="Model\ManufactoryGM.cs" />
+    <Compile Include="Model\Order.cs" />
+    <Compile Include="Model\Contragent.cs" />
+    <Compile Include="Model\OrderAggregate.cs" />
+    <Compile Include="Model\SPU.cs" />
+    <Compile Include="Model\SPUTare.cs" />
     <Compile Include="Model\StateApp.cs" />
+    <Compile Include="Model\Tare.cs" />
     <Compile Include="Model\Test.cs" />
+    <Compile Include="Model\D3.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\ChangeUserWindowModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
@@ -180,6 +197,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202503050542170_AddVersion.resx">
       <DependentUpon>202503050542170_AddVersion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202503120549318_MainCreateTable.resx">
+      <DependentUpon>202503120549318_MainCreateTable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

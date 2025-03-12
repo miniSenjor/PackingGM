@@ -19,33 +19,53 @@ namespace PackingGM.Model
         public int Id
         {
             get => _id;
-            set => SetField(ref _id, value);
+            set
+            {
+                _id = value;
+                OnPropertyChanged(nameof(Id));
+            }
         }
         private string _login;
         //[Column(TypeName = "varchar(100)")]
         public string Login
         {
             get => _login;
-            set => SetField(ref _login, value);
+            set
+            {
+                _login = value;
+                OnPropertyChanged(nameof(Login));
+            }
         }
         private string _password;
         //[Column(TypeName = "varchar(100)")]
         public string Password
         {
             get => _password;
-            set => SetField(ref _password, value);
+            set
+            {
+                _password = value;
+                OnPropertyChanged(nameof(Password));
+            }
         }
         private int _roleId;
         public int RoleId
         {
             get => _roleId;
-            set => SetField(ref _roleId, value);
+            set
+            {
+                _roleId = value;
+                OnPropertyChanged(nameof(RoleId));
+            }
         }
         private int? _manufactoryId;
         public int? ManufactoryId
         {
             get => _manufactoryId;
-            set => SetField(ref _manufactoryId, value);
+            set
+            {
+                _manufactoryId = value;
+                OnPropertyChanged(nameof(Manufactory));
+            }
         }
         public Role Role { get; set; }
         public Manufactory Manufactory { get; set; }

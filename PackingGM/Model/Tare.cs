@@ -5,16 +5,9 @@ using System.Text;
 
 namespace PackingGM.Model
 {
-    public class Manufactory : BaseModel
+    public class Tare : BaseModel
     {
-        public Manufactory()
-        {
-            this.Users = new HashSet<User>();
-            //Is_alowed_admining = false;
-        }
-        
         private int _id;
-        //[Key]
         public int Id
         {
             get => _id;
@@ -22,11 +15,9 @@ namespace PackingGM.Model
             {
                 _id = value;
                 OnPropertyChanged(nameof(Id));
-                //SetField(ref _id, value);
             }
         }
         private string _number;
-        //[Column(TypeName = "varchar(100)")]
         public string Number
         {
             get => _number;
@@ -36,7 +27,16 @@ namespace PackingGM.Model
                 OnPropertyChanged(nameof(Number));
             }
         }
-        public ICollection<User> Users { get; set; }
-        public ICollection<ManufactoryGM> ManufactoryGMs { get; set; }
+        private string _name;
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                _name = value;
+                OnPropertyChanged(nameof(Name));
+            }
+        }
+        public ICollection<SPUTare> SPUTares { get; set; }
     }
 }
