@@ -5,6 +5,9 @@ using System.Text;
 
 namespace PackingGM.Model
 {
+    /// <summary>
+    /// Связь производство грузовое место
+    /// </summary>
     public class ManufactoryGM : BaseModel
     {
         private int _manufactoryId;
@@ -17,28 +20,17 @@ namespace PackingGM.Model
                 OnPropertyChanged(nameof(ManyfactoryId));
             }
         }
-        private int _d3Id;
-        public int D3Id
+        private int _gMId;
+        public int GMId
         {
-            get => _d3Id;
+            get => _gMId;
             set
             {
-                _d3Id = value;
-                OnPropertyChanged(nameof(D3Id));
-            }
-        }
-        private int _sPUId;
-        public int SPUId
-        {
-            get => _sPUId;
-            set
-            {
-                _sPUId = value;
-                OnPropertyChanged(nameof(SPUId));
+                _gMId = value;
+                OnPropertyChanged(nameof(GMId));
             }
         }
         public Manufactory Manufactory { get; set; }
         public GM GM { get; set; }
-        public SPU SPU { get; set; }
     }
 }

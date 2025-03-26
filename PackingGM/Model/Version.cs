@@ -6,12 +6,12 @@ using System.Text;
 namespace PackingGM.Model
 {
     /// <summary>
-    /// Тип агрегата
+    /// Класс-родитель для версий
     /// </summary>
-    public class AggregateType : BaseModel
+    public class Version : BaseModel
     {
-        private int _id;
-        public int Id
+        private protected int _id;
+        public virtual int Id
         {
             get => _id;
             set
@@ -20,8 +20,8 @@ namespace PackingGM.Model
                 OnPropertyChanged(nameof(Id));
             }
         }
-        private string _name;
-        public string Name
+        private protected string _name;
+        public virtual string Name
         {
             get => _name;
             set
@@ -30,6 +30,15 @@ namespace PackingGM.Model
                 OnPropertyChanged(nameof(Name));
             }
         }
-        public ICollection<DrawingName> DrawingNames { get; set; }
+        private protected short _state;
+        public virtual short State
+        {
+            get => _state;
+            set
+            {
+                _state = value;
+                OnPropertyChanged(nameof(State));
+            }
+        }
     }
 }

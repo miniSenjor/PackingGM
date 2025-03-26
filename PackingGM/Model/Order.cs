@@ -31,13 +31,13 @@ namespace PackingGM.Model
             }
         }
         private int _contragentId;
-        public int ConteragentId
+        public Nullable<int> ContragentId
         {
             get => _contragentId;
             set
             {
-                _contragentId = value;
-                OnPropertyChanged(nameof(ConteragentId));
+                _contragentId = (int)value;
+                OnPropertyChanged(nameof(ContragentId));
             }
         }
         public Contragent Contragent { get; set; }

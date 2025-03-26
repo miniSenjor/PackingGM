@@ -7,13 +7,13 @@ namespace PackingGM.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.0.0-20911")]
-    public sealed partial class MainCreateTable : IMigrationMetadata
+    public sealed partial class InitialCreate : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(MainCreateTable));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialCreate));
         
         string IMigrationMetadata.Id
         {
-            get { return "202503120549318_MainCreateTable"; }
+            get { return "202503261152463_InitialCreate"; }
         }
         
         string IMigrationMetadata.Source

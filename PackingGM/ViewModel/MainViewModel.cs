@@ -25,7 +25,7 @@ namespace PackingGM.ViewModel
         }
         private void OpenChangeRole(object obj)
         {
-            Navigation.Navigate(new ManageRoleView());
+            Navigation.Navigate(PageType.ManageRoleView);
         }
 
         private RelayCommand _openChangeUserCommand;
@@ -42,7 +42,35 @@ namespace PackingGM.ViewModel
         {
             MainWindow main = new MainWindow();
             //main.ShowDialog();
-            Navigation.Navigate(new ManageUserView());
+            Navigation.Navigate(PageType.ManageUserView);
+        }
+        private RelayCommand _openChangeGraphCommand;
+        public RelayCommand OpenChangeGraphCommand
+        {
+            get
+            {
+                if (_openChangeGraphCommand == null)
+                    _openChangeGraphCommand = new RelayCommand(OpenChangeGraph);
+                return _openChangeGraphCommand;
+            }
+        }
+        private void OpenChangeGraph(object obj)
+        {
+            Navigation.Navigate(PageType.ManageGraphView);
+        }
+        private RelayCommand _openTestCommand;
+        public RelayCommand OpenTestCommand
+        {
+            get
+            {
+                if (_openTestCommand == null)
+                    _openTestCommand = new RelayCommand(OpenTest);
+                return _openTestCommand;
+            }
+        }
+        private void OpenTest(object obj)
+        {
+            Navigation.Navigate(PageType.TestView);
         }
     }
 }

@@ -23,9 +23,9 @@ namespace PackingGM.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private protected void Save(object obj)
-        {
+        //private protected void Save(object obj)
+        //{
 
-        }
+        //}
     }
 }

@@ -23,6 +23,12 @@
             <Button Command="{Binding OpenChangeUserCommand}">
                 Управление пользователями
             </Button>
+            <Button Command="{Binding OpenChangeGraphCommand}">
+                Управление графиком
+            </Button>
+            <Button Command="{Binding OpenTestCommand}">
+                Тест
+            </Button>
         </StackPanel>
     </Grid>
 </Page>

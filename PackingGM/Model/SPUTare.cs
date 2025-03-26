@@ -5,16 +5,29 @@ using System.Text;
 
 namespace PackingGM.Model
 {
+    /// <summary>
+    /// Связь СПУ-тара
+    /// </summary>
     public class SPUTare : BaseModel
     {
-        private int _sPUId;
-        public int SPUId
+        private int _id;
+        public int Id
         {
-            get => _sPUId;
+            get => _id;
             set
             {
-                _sPUId = value;
-                OnPropertyChanged(nameof(SPUId));
+                _id = value;
+                OnPropertyChanged(nameof(Id));
+            }
+        }
+        private int _sPUVersionId;
+        public int SPUVersionId
+        {
+            get => _sPUVersionId;
+            set
+            {
+                _sPUVersionId = value;
+                OnPropertyChanged(nameof(SPUVersionId));
             }
         }
         private int _tareId;
@@ -37,23 +50,8 @@ namespace PackingGM.Model
                 OnPropertyChanged(nameof(CountNeed));
             }
         }
-        private int _countGet;
-        public int CountGet
-        {
-            get => _countGet;
-            set
-            {
-                if (value > _countNeed)
-                    throw new ArgumentOutOfRangeException("Нельзя задать количество полученой тары больше требуемой");
-                _countGet = value;
-                OnPropertyChanged(nameof(CountGet));
-            }
-        }
-        public int Deficit
-        {
-            get => CountNeed - CountGet;
-        }
-        public SPU SPU { get; set; }
+        public SPUVersion SPUVersion { get; set; }
         public Tare Tare { get; set; }
+        public ICollection<GM> GMs { get; set; }
     }
 }

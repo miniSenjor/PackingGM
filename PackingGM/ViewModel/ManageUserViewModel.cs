@@ -110,7 +110,7 @@ namespace PackingGM.ViewModel
 
         private void Back(object obj)
         {
-            Navigation.Navigate(new MainView());
+            Navigation.Navigate(PageType.MainView);
         }
     }
 }

@@ -9,6 +9,9 @@ using System.Windows.Controls;
 
 namespace PackingGM.Model
 {
+    /// <summary>
+    /// Состояние приложения
+    /// </summary>
     public class StateApp : BaseModel
     {
         public StateApp(string state = "Готово")

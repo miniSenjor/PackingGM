@@ -30,17 +30,17 @@ namespace PackingGM.Model
                 OnPropertyChanged(nameof(Number));
             }
         }
-        private int _drawingNameAggregateId;
-        public int DrawingNameAggregateId
+        private int _drawingNameId;
+        public Nullable<int> DrawingNameId
         {
-            get => _drawingNameAggregateId;
+            get => _drawingNameId;
             set
             {
-                _drawingNameAggregateId = value;
-                OnPropertyChanged(nameof(DrawingNameAggregate));
+                _drawingNameId = (int)value;
+                OnPropertyChanged(nameof(DrawingNameId));
             }
         }
-        public DrawingNameAggregate DrawingNameAggregate { get; set; }
+        public DrawingName DrawingName { get; set; }
         public ICollection<OrderAggregate> OrderAggregates { get; set; }
     }
 }

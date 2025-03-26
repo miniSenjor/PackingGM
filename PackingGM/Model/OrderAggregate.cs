@@ -32,5 +32,6 @@ namespace PackingGM.Model
         }
         public Order Order { get; set; }
         public Aggregate Aggregate { get; set; }
+        public ICollection<GM> GMs { get; set; }
     }
 }

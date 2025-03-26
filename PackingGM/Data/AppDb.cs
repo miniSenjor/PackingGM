@@ -47,45 +47,25 @@ namespace PackingGM.Data
                 .WithRequired(oa => oa.Aggregate)
                 .HasForeignKey(oa => oa.AggregateId);
 
-            modelBuilder.Entity<DrawingNameAggregateD3>().HasKey(dd => new { dd.DrawingNameAggregateId, dd.D3Id });
-            modelBuilder.Entity<DrawingNameAggregate>()
-                .HasMany(d => d.DrawingNameAggregateD3s)
-                .WithRequired(dd => dd.DrawingNameAggregate)
-                .HasForeignKey(dd => dd.DrawingNameAggregateId);
+            modelBuilder.Entity<DrawingNameD3>().HasKey(dd => new { dd.DrawingNameVersionId, dd.D3Id });
+            modelBuilder.Entity<DrawingNameVersion>()
+                .HasMany(d => d.DrawingNameD3s)
+                .WithRequired(dd => dd.DrawingNameVersion)
+                .HasForeignKey(dd => dd.DrawingNameVersionId);
             modelBuilder.Entity<D3>()
-                .HasMany(d => d.DrawingNameAggregateD3s)
+                .HasMany(d => d.DrawingNameD3s)
                 .WithRequired(dd => dd.D3)
                 .HasForeignKey(dd => dd.D3Id);
 
-            modelBuilder.Entity<GM>().HasKey(ds => new { ds.D3Id, ds.SPUId });
-            modelBuilder.Entity<D3>()
-                .HasMany(d => d.GMs)
-                .WithRequired(ds => ds.D3)
-                .HasForeignKey(ds => ds.D3Id);
-            modelBuilder.Entity<SPU>()
-                .HasMany(s => s.GMs)
-                .WithRequired(ds => ds.SPU)
-                .HasForeignKey(ds => ds.SPUId);
-
-            modelBuilder.Entity<SPUTare>().HasKey(st => new { st.SPUId, st.TareId });
-            modelBuilder.Entity<SPU>()
-                .HasMany(s => s.SPUTares)
-                .WithRequired(st => st.SPU)
-                .HasForeignKey(st => st.SPUId);
-            modelBuilder.Entity<Tare>()
-                .HasMany(t => t.SPUTares)
-                .WithRequired(st => st.Tare)
-                .HasForeignKey(st => st.TareId);
-
-            modelBuilder.Entity<ManufactoryGM>().HasKey(mds => new { mds.ManyfactoryId, mds.D3Id, mds.SPUId });
+            modelBuilder.Entity<ManufactoryGM>().HasKey(mg => new { mg.ManyfactoryId, mg.GMId });
             modelBuilder.Entity<Manufactory>()
                 .HasMany(m => m.ManufactoryGMs)
-                .WithRequired(mds => mds.Manufactory)
-                .HasForeignKey(mds => mds.ManyfactoryId);
+                .WithRequired(mg => mg.Manufactory)
+                .HasForeignKey(mg => mg.ManyfactoryId);
             modelBuilder.Entity<GM>()
-                .HasMany(ds => ds.ManufactoryGMs)
-                .WithRequired(mds => mds.GM)
-                .HasForeignKey(mds => new { mds.D3Id, mds.SPUId });
+                .HasMany(g => g.ManufactoryGMs)
+                .WithRequired(mg => mg.GM)
+                .HasForeignKey(mg => mg.GMId);
             //modelBuilder.Entity<Role>()
             //.Property(u => u.RowVersion)
             //.IsRowVersion();
@@ -99,16 +79,20 @@ namespace PackingGM.Data
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderAggregate> OrderAggregates { get; set; }
         public DbSet<AggregateType> AggregateTypes { get; set; }
-        public DbSet<DrawingNameAggregate> DrawingNameAggregates { get; set; }
+        public DbSet<DrawingName> DrawingNameAggregates { get; set; }
         public DbSet<Aggregate> Aggregates { get; set; }
         public DbSet<D3> D3s { get; set; }
-        public DbSet<DrawingNameAggregateD3> DrawingNameAggregateD3s { get; set; }
+        public DbSet<DrawingNameD3> DrawingNameD3s { get; set; }
         public DbSet<SPU> SPUs { get; set; }
         public DbSet<Manufactory> Manufactories { get; set; }
         public DbSet<GM> GMs { get; set; }
         public DbSet<ManufactoryGM> ManufactoryGMs { get; set; }
         public DbSet<Tare> Tares { get; set; }
         public DbSet<SPUTare> SPUTares { get; set; }
+        public DbSet<GMNumber> GMNumbers { get; set; }
+        public DbSet<DrawingNameVersion> DrawingNameVersions { get; set; }
+        public DbSet<D3Version> D3Versions { get; set; }
+        public DbSet<SPUVersion> SPUVersions { get; set; }
         //public DbSet<Test> Test { get; set; }
     }
 }

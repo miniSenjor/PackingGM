@@ -5,37 +5,56 @@ using System.Text;
 
 namespace PackingGM.Model
 {
+    /// <summary>
+    /// Грузовое место (существующее)
+    /// </summary>
     public class GM : BaseModel
     {
-        private int _d3Id;
-        public int D3Id
+        private int _id;
+        public int Id
         {
-            get => _d3Id;
+            get => _id;
             set
             {
-                _d3Id = value;
-                OnPropertyChanged(nameof(D3Id));
+                _id = value;
+                OnPropertyChanged(nameof(Id));
             }
         }
-        private int _sPUId;
-        public int SPUId
+        private int _gMNumberId;
+        public int GMNumberId
         {
-            get => _sPUId;
+            get => _gMNumberId;
             set
             {
-                _sPUId = value;
-                OnPropertyChanged(nameof(SPUId));
+                _gMNumberId = value;
+                OnPropertyChanged(nameof(GMNumberId));
             }
         }
-        private string _numberGM;
-        public string NumberGM
+        private int _sPUTareId;
+        public int SPUTareId
         {
-            get => _numberGM;
+            get => _sPUTareId;
             set
             {
-                _numberGM = value;
-                OnPropertyChanged(nameof(NumberGM));
+                _sPUTareId = value;
+                OnPropertyChanged(nameof(SPUTareId));
             }
+        }
+        private int _countGet;
+        public int CountGet
+        {
+            get => _countGet;
+            set
+            {
+                if (value > SPUTare.CountNeed)
+                    throw new ArgumentOutOfRangeException("Нельзя задать количество полученой тары больше требуемой");
+                _countGet = value;
+                OnPropertyChanged(nameof(CountGet));
+            }
+        }
+        public int Deficit
+        {
+            get => SPUTare.CountNeed - CountGet;
         }
         private DateTime _plannedDeadline;
         public DateTime PlannedDeadline
@@ -51,8 +70,9 @@ namespace PackingGM.Model
         {
             get => PlannedDeadline.AddDays(-14);
         }
-        public D3 D3 { get; set; }
-        public SPU SPU { get; set; }
+        public GMNumber GMNumber { get; set; }
+        public SPUTare SPUTare { get; set; }
+        public OrderAggregate OrderAggregate { get; set; }
         public ICollection<ManufactoryGM> ManufactoryGMs { get; set; }
     }
 }

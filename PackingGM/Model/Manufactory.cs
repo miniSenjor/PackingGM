@@ -5,6 +5,9 @@ using System.Text;
 
 namespace PackingGM.Model
 {
+    /// <summary>
+    /// Производство цех
+    /// </summary>
     public class Manufactory : BaseModel
     {
         public Manufactory()

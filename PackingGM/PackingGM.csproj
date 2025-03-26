@@ -69,39 +69,33 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Migrations\202502261145331_InitialCreate.cs" />
-    <Compile Include="Migrations\202502261145331_InitialCreate.Designer.cs">
-      <DependentUpon>202502261145331_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202502270854364_InitialCreate1.cs" />
-    <Compile Include="Migrations\202502270854364_InitialCreate1.Designer.cs">
-      <DependentUpon>202502270854364_InitialCreate1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202503050542170_AddVersion.cs" />
-    <Compile Include="Migrations\202503050542170_AddVersion.Designer.cs">
-      <DependentUpon>202503050542170_AddVersion.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202503120549318_MainCreateTable.cs" />
-    <Compile Include="Migrations\202503120549318_MainCreateTable.Designer.cs">
-      <DependentUpon>202503120549318_MainCreateTable.cs</DependentUpon>
+    <Compile Include="Migrations\202503261152463_InitialCreate.cs" />
+    <Compile Include="Migrations\202503261152463_InitialCreate.Designer.cs">
+      <DependentUpon>202503261152463_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Aggregate.cs" />
     <Compile Include="Model\AggregateType.cs" />
+    <Compile Include="Model\D3Version.cs" />
+    <Compile Include="Model\DrawingNameVersion.cs" />
     <Compile Include="Model\GM.cs" />
-    <Compile Include="Model\DrawingNameAggregate.cs" />
-    <Compile Include="Model\DrawingNameAggregateD3.cs" />
+    <Compile Include="Model\DrawingName.cs" />
+    <Compile Include="Model\DrawingNameD3.cs" />
+    <Compile Include="Model\GMNumber.cs" />
     <Compile Include="Model\Manufactory.cs" />
     <Compile Include="Model\ManufactoryGM.cs" />
+    <Compile Include="Model\NMK.cs" />
     <Compile Include="Model\Order.cs" />
     <Compile Include="Model\Contragent.cs" />
     <Compile Include="Model\OrderAggregate.cs" />
     <Compile Include="Model\SPU.cs" />
     <Compile Include="Model\SPUTare.cs" />
+    <Compile Include="Model\SPUVersion.cs" />
     <Compile Include="Model\StateApp.cs" />
     <Compile Include="Model\Tare.cs" />
     <Compile Include="Model\Test.cs" />
     <Compile Include="Model\D3.cs" />
+    <Compile Include="Model\Version.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\ChangeUserWindowModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
@@ -111,6 +105,7 @@
     <Compile Include="ViewModel\ManageUserViewModel.cs" />
     <Compile Include="ViewModel\Navigation.cs" />
     <Compile Include="ViewModel\RelayCommand.cs" />
+    <Compile Include="ViewModel\TestViewModel.cs" />
     <Compile Include="View\ChangeUserWindow.xaml.cs">
       <DependentUpon>ChangeUserWindow.xaml</DependentUpon>
     </Compile>
@@ -122,6 +117,12 @@
     </Compile>
     <Compile Include="View\ManageUserView.xaml.cs">
       <DependentUpon>ManageUserView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TestView.xaml.cs">
+      <DependentUpon>TestView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Control\ComboTextBox.xaml.cs">
+      <DependentUpon>ComboTextBox.xaml</DependentUpon>
     </Compile>
     <Page Include="View\ChangeUserWindow.xaml">
       <SubType>Designer</SubType>
@@ -166,7 +167,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\TestView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Theme\DarkTheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Control\ComboTextBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -189,17 +198,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Migrations\202502261145331_InitialCreate.resx">
-      <DependentUpon>202502261145331_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202502270854364_InitialCreate1.resx">
-      <DependentUpon>202502270854364_InitialCreate1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202503050542170_AddVersion.resx">
-      <DependentUpon>202503050542170_AddVersion.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202503120549318_MainCreateTable.resx">
-      <DependentUpon>202503120549318_MainCreateTable.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202503261152463_InitialCreate.resx">
+      <DependentUpon>202503261152463_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -212,6 +212,8 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="TCS\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

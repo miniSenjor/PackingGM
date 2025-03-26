@@ -12,6 +12,7 @@ using PackingGM.Model;
 using PackingGM.Data;
 using PackingGM.View;
 using System.Windows.Media;
+using System.Data.SqlClient;
 
 namespace PackingGM.ViewModel
 {
@@ -19,6 +20,38 @@ namespace PackingGM.ViewModel
     {
         public LoginViewModel()
         {
+            //string connString = "Server=gt-srv30;Database=gt;User Id=1587;Password=YD30K2D5;";
+
+            ////Создание подключения
+            //using (SqlConnection conn = new SqlConnection(connString))
+            //{
+            //    try
+            //    {
+            //        // Открываем соединение
+            //        conn.Open();
+            //        string sql1 = "SELECT [NMK_NAME] FROM[NMK] where NMK.NMK_NOTE = R59800698";
+            //        string sql2 = "SELECT @@VERSION AS Version";
+            //        // Выполнение SQL-запроса
+            //        using (SqlCommand cmd = new SqlCommand(sql1, conn))
+            //        {
+            //            // Выполнение запроса и получение результата
+            //            //string version = cmd.ExecuteScalar().ToString();
+
+            //            using (SqlDataReader reader = cmd.ExecuteReader())
+            //            {
+            //                while (reader.Read())
+            //                {
+            //                    MessageBox.Show($"Версия {reader["Version"]}");
+            //                }
+            //            }
+            //        }
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        MessageBox.Show(ex.ToString());
+            //    }
+            //}
+            //return;
             try
             {
                 _context = App.GetContext();
@@ -98,7 +131,7 @@ namespace PackingGM.ViewModel
             else if ((bool)e.Result)
             {
                 StateApp.Instance.ChangeAll("Успешный вход!", "blue");
-                Navigation.Navigate(new MainView());
+                Navigation.Navigate(PageType.MainView);
             }
         }
 
@@ -116,7 +149,7 @@ namespace PackingGM.ViewModel
         {
             if (!_isConnected)
             {
-                Navigation.Navigate(new MainView());
+                Navigation.Navigate(PageType.MainView);
                 return;
             }
             if (string.IsNullOrEmpty(LogUser.Login) || string.IsNullOrEmpty(LogUser.Password))

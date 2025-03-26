@@ -5,29 +5,12 @@ using System.Text;
 
 namespace PackingGM.Model
 {
-    public class D3 : BaseModel
+    /// <summary>
+    /// Комплектовочная ведомость Д3
+    /// </summary>
+    public class D3 : NMK
     {
-        private int _id;
-        public int Id
-        {
-            get => _id;
-            set
-            {
-                _id = value;
-                OnPropertyChanged(nameof(Id));
-            }
-        }
-        private string _number;
-        public string Number
-        {
-            get => _number;
-            set
-            {
-                _number = value;
-                OnPropertyChanged(nameof(Number));
-            }
-        }
-        public ICollection<DrawingNameAggregateD3> DrawingNameAggregateD3s { get; set; }
-        public ICollection<GM> GMs { get; set; }
+        public ICollection<DrawingNameD3> DrawingNameD3s { get; set; }
+        public ICollection<D3Version> D3Versions { get; set; }
     }
 }

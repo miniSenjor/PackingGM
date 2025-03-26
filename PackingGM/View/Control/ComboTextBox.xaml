@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="PackingGM.View.Control.ComboTextBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PackingGM.View.Control"
+             mc:Ignorable="d" 
+             d:DesignHeight="30" d:DesignWidth="200">
+    <Grid>
+        <StackPanel>
+            <DockPanel>
+                <Button Click="Button_Click"
+                        DockPanel.Dock="Right"
+                        Content="V"
+                        Width="12"/>
+                <TextBox TextChanged="TextBox_TextChanged"
+                         x:Name="txt"
+                         PreviewLostKeyboardFocus="Txt_PreviewLostKeyboardFocus"/>
+            </DockPanel>
+            <Popup x:Name="ItemsPopup"
+                   Placement="Bottom"
+                   StaysOpen="False">
+                <ListBox x:Name="lst"
+                         SelectionChanged="ListBox_SelectionChanged"
+                         MaxHeight="150"/>
+            </Popup>
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -23,9 +23,14 @@ namespace PackingGM.View
         public MainWindow()
         {
             InitializeComponent();
+            Navigation.RegisterPage(PageType.LoginView, new LoginView());
+            Navigation.RegisterPage(PageType.MainView, new MainView());
+            Navigation.RegisterPage(PageType.ManageRoleView, new ManageRoleView());
+            Navigation.RegisterPage(PageType.ManageGraphView, new ManageGraphView());
+            Navigation.RegisterPage(PageType.TestView, new TestView());
             Navigation.Initialize(MainFrame);
             ///<summary>Открытие страницы с авторизацией</summary>
-            Navigation.Navigate(new LoginView());
+            Navigation.Navigate(PageType.LoginView);
         }
     }
 }

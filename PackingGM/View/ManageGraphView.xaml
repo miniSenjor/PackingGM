@@ -4,11 +4,214 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:PackingGM.View"
+      xmlns:local1="clr-namespace:PackingGM.View.Control"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="ManageGraphView">
+      d:DesignHeight="450" d:DesignWidth="19200"
+      Title="ManageGraphView"
+      Style="{DynamicResource PageStyle}">
 
     <Grid>
+        <ListView ItemsSource="{Binding ListGMs}">
+            <ListView.View>
+                <GridView>
+                    <!-- Колонка для  Manufactory-->
+                    <GridViewColumn Header="№ Пр-ва" Width="55">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <local1:ComboTextBox SelectedItem="{Binding Manufactory.Number}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <!-- Колонка для AggregateType-->
+                    <GridViewColumn Header="Тип изделия" Width="70">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <local1:ComboTextBox SelectedItem="{Binding AggregateType.Name}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <!-- Колонка для Contragent-->
+                    <GridViewColumn Header="Контрагент" Width="100">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <local1:ComboTextBox SelectedItem="{Binding Contragent.Name}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <!-- Колонка для Aggregate -->
+                    <GridViewColumn Header="№ агрегата" Width="75">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <local1:ComboTextBox SelectedItem="{Binding Aggregate.Name}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <!-- Колонка для Order -->
+                    <GridViewColumn Header="№ заказа" Width="75">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <local1:ComboTextBox SelectedItem="{Binding Order.Number}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <!-- Колонка для GM -->
+                    <GridViewColumn Header="№ ГМ" Width="55">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <local1:ComboTextBox SelectedItem="{Binding GM.Number}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <!-- Колонка для SPU -->
+                    <GridViewColumn Header="Обозначение СПУ" Width="105">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <local1:ComboTextBox SelectedItem="{Binding SPU.Number}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <!-- Колонка для SPU -->
+                    <GridViewColumn Header="Наименование СПУ" Width="115">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding SPU.Name, UpdateSourceTrigger=PropertyChanged}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <!-- Колонка для Tara -->
+                    <GridViewColumn Header="Обозначение тары" Width="110">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <local1:ComboTextBox SelectedItem="{Binding Tara.Number}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <!-- Колонка для Tara -->
+                    <GridViewColumn Header="Наименование тары" Width="110">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding Tara.Name, UpdateSourceTrigger=PropertyChanged}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <!-- Колонка для CountNeed -->
+                    <GridViewColumn Header="Кол-во потребность" Width="70">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding SPUTara.CountNeed, UpdateSourceTrigger=PropertyChanged}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <!-- Колонка для CountGet -->
+                    <GridViewColumn Header="Кол-во получено" Width="70">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding SPUTara.CountGet, UpdateSourceTrigger=PropertyChanged}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <!-- Колонка для Dificit -->
+                    <GridViewColumn Header="Дефицит" Width="55">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding SPUTara.Deficit, UpdateSourceTrigger=PropertyChanged}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <!-- Колонка для DemindNumber -->
+                    <GridViewColumn Header="№ требования" Width="60">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding GM.DemindNumber, UpdateSourceTrigger=PropertyChanged}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <!-- Колонка для DemindDate-->
+                    <GridViewColumn Header="Дата требования" Width="60">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding GM.DemindData, UpdateSourceTrigger=PropertyChanged}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <!-- Колонка для GMDate1 -->
+                    <GridViewColumn Header="Плановый срок сдачи ГМ" Width="65">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding GM.Date1, UpdateSourceTrigger=PropertyChanged}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <!-- Колонка для GMDate2 -->
+                    <GridViewColumn Header="Необходимый срок обеспечения" Width="65">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding GM.Date2, UpdateSourceTrigger=PropertyChanged}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <!-- Колонка для GMDate3 -->
+                    <GridViewColumn Header="Обещанный срок обеспечения СМТС" Width="60">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding GM.DemindNumber, UpdateSourceTrigger=PropertyChanged}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <!-- Колонка для GMDPrime4anie -->
+                    <GridViewColumn Header="Примечание" Width="100">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding GM.Prime4anie, UpdateSourceTrigger=PropertyChanged}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <!-- Колонка для GMDNackaldania -->
+                    <GridViewColumn Header="Накладая на сдачу ГМ в ООП" Width="70">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding GM.NackaldaiaNumber, UpdateSourceTrigger=PropertyChanged}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <!-- Колонка для GMDNackaldania -->
+                    <GridViewColumn Header="Дата накладной" Width="60">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding GM.NackaldaiaDate, UpdateSourceTrigger=PropertyChanged}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <!-- Колонка для SZ -->
+                    <GridViewColumn Header="Служебная записка на запуск ППО" Width="60">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding GM.NackaldaiaDate, UpdateSourceTrigger=PropertyChanged}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <!-- Колонка для Что это -->
+                    <GridViewColumn Header="№ график сдачи ГМ (ПДО)" Width="60">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding GM.NackaldaiaDate, UpdateSourceTrigger=PropertyChanged}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <!-- Колонка для Резервное поле-->
+                    <GridViewColumn Header="Резервное поле" Width="70">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding GM.RezervField, UpdateSourceTrigger=PropertyChanged}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+
         
     </Grid>
 </Page>
