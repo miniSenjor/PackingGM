@@ -79,7 +79,7 @@ namespace PackingGM.Data
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderAggregate> OrderAggregates { get; set; }
         public DbSet<AggregateType> AggregateTypes { get; set; }
-        public DbSet<DrawingName> DrawingNameAggregates { get; set; }
+        public DbSet<DrawingName> DrawingNames { get; set; }
         public DbSet<Aggregate> Aggregates { get; set; }
         public DbSet<D3> D3s { get; set; }
         public DbSet<DrawingNameD3> DrawingNameD3s { get; set; }

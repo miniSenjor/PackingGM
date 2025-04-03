@@ -48,6 +48,7 @@ namespace PackingGM.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         DrawingNameId = c.Int(nullable: false),
+                        IdTCS = c.Int(nullable: false),
                         Name = c.String(),
                         State = c.Short(nullable: false),
                     })
@@ -85,6 +86,7 @@ namespace PackingGM.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         D3Id = c.Int(nullable: false),
+                        IdTCS = c.Int(nullable: false),
                         Name = c.String(),
                         State = c.Short(nullable: false),
                     })
@@ -222,23 +224,21 @@ namespace PackingGM.Migrations
                         CountNeed = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.SPUVersions", t => t.SPUVersionId, cascadeDelete: true)
                 .ForeignKey("dbo.Tares", t => t.TareId, cascadeDelete: true)
-                .Index(t => t.SPUVersionId)
-                .Index(t => t.TareId);
+                .ForeignKey("dbo.SPUVersions", t => t.SPUVersionId, cascadeDelete: true)
+                .Index(t => t.TareId)
+                .Index(t => t.SPUVersionId);
             
             CreateTable(
-                "dbo.SPUVersions",
+                "dbo.Tares",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        SPUId = c.Int(nullable: false),
+                        NormalizedText = c.String(),
+                        Note = c.String(),
                         Name = c.String(),
-                        State = c.Short(nullable: false),
                     })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.SPUs", t => t.SPUId, cascadeDelete: true)
-                .Index(t => t.SPUId);
+                .PrimaryKey(t => t.Id);
             
             CreateTable(
                 "dbo.SPUs",
@@ -252,27 +252,30 @@ namespace PackingGM.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.Tares",
+                "dbo.SPUVersions",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        NormalizedText = c.String(),
-                        Note = c.String(),
+                        SPUId = c.Int(nullable: false),
+                        IdTCS = c.Int(nullable: false),
                         Name = c.String(),
+                        State = c.Short(nullable: false),
                     })
-                .PrimaryKey(t => t.Id);
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.SPUs", t => t.SPUId, cascadeDelete: true)
+                .Index(t => t.SPUId);
             
         }
         
         public override void Down()
         {
+            DropForeignKey("dbo.SPUTares", "SPUVersionId", "dbo.SPUVersions");
+            DropForeignKey("dbo.SPUVersions", "SPUId", "dbo.SPUs");
+            DropForeignKey("dbo.GMNumbers", "SPUId", "dbo.SPUs");
             DropForeignKey("dbo.OrderAggregates", "AggregateId", "dbo.Aggregates");
             DropForeignKey("dbo.DrawingNameD3", "DrawingNameVersionId", "dbo.DrawingNameVersions");
             DropForeignKey("dbo.DrawingNameD3", "D3Id", "dbo.D3");
             DropForeignKey("dbo.SPUTares", "TareId", "dbo.Tares");
-            DropForeignKey("dbo.SPUTares", "SPUVersionId", "dbo.SPUVersions");
-            DropForeignKey("dbo.SPUVersions", "SPUId", "dbo.SPUs");
-            DropForeignKey("dbo.GMNumbers", "SPUId", "dbo.SPUs");
             DropForeignKey("dbo.GMs", "SPUTareId", "dbo.SPUTares");
             DropForeignKey("dbo.OrderAggregates", "OrderId", "dbo.Orders");
             DropForeignKey("dbo.Orders", "ContragentId", "dbo.Contragents");
@@ -287,13 +290,13 @@ namespace PackingGM.Migrations
             DropForeignKey("dbo.DrawingNameVersions", "DrawingNameId", "dbo.DrawingNames");
             DropForeignKey("dbo.DrawingNames", "AggregateTypeId", "dbo.AggregateTypes");
             DropForeignKey("dbo.Aggregates", "DrawingNameId", "dbo.DrawingNames");
+            DropIndex("dbo.SPUTares", new[] { "SPUVersionId" });
+            DropIndex("dbo.SPUVersions", new[] { "SPUId" });
+            DropIndex("dbo.GMNumbers", new[] { "SPUId" });
             DropIndex("dbo.OrderAggregates", new[] { "AggregateId" });
             DropIndex("dbo.DrawingNameD3", new[] { "DrawingNameVersionId" });
             DropIndex("dbo.DrawingNameD3", new[] { "D3Id" });
             DropIndex("dbo.SPUTares", new[] { "TareId" });
-            DropIndex("dbo.SPUTares", new[] { "SPUVersionId" });
-            DropIndex("dbo.SPUVersions", new[] { "SPUId" });
-            DropIndex("dbo.GMNumbers", new[] { "SPUId" });
             DropIndex("dbo.GMs", new[] { "SPUTareId" });
             DropIndex("dbo.OrderAggregates", new[] { "OrderId" });
             DropIndex("dbo.Orders", new[] { "ContragentId" });
@@ -308,9 +311,9 @@ namespace PackingGM.Migrations
             DropIndex("dbo.DrawingNameVersions", new[] { "DrawingNameId" });
             DropIndex("dbo.DrawingNames", new[] { "AggregateTypeId" });
             DropIndex("dbo.Aggregates", new[] { "DrawingNameId" });
-            DropTable("dbo.Tares");
-            DropTable("dbo.SPUs");
             DropTable("dbo.SPUVersions");
+            DropTable("dbo.SPUs");
+            DropTable("dbo.Tares");
             DropTable("dbo.SPUTares");
             DropTable("dbo.Contragents");
             DropTable("dbo.Orders");

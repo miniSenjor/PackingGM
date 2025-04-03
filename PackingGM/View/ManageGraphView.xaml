@@ -14,17 +14,34 @@
         <ListView ItemsSource="{Binding ListGMs}">
             <ListView.View>
                 <GridView>
-                    <!-- Колонка для  Manufactory-->
-                    <GridViewColumn Header="№ Пр-ва" Width="55">
+                    <GridViewColumn Width="40">
+                        <GridViewColumn.Header>
+                            <TextBlock Text="№ п/п" TextWrapping="Wrap"/>
+                        </GridViewColumn.Header>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <local1:ComboTextBox SelectedItem="{Binding Manufactory.Number}"/>
+                                <local1:ComboTextBox SelectedItem="{Binding Number}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    
+                    <!-- Колонка для  Manufactory-->
+                    <GridViewColumn Width="55">
+                        <GridViewColumn.Header>
+                            <TextBlock Text="№ Пр-ва" TextWrapping="Wrap"/>
+                        </GridViewColumn.Header>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <local1:ComboTextBox SelectedItem="{Binding Manufactory.Number}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
                     <!-- Колонка для AggregateType-->
-                    <GridViewColumn Header="Тип изделия" Width="70">
+                    <GridViewColumn Width="60">
+                        <GridViewColumn.Header>
+                            <TextBlock Text="Тип изделия" TextWrapping="Wrap"/>
+                        </GridViewColumn.Header>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <local1:ComboTextBox SelectedItem="{Binding AggregateType.Name}"/>
@@ -32,7 +49,10 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <!-- Колонка для Contragent-->
-                    <GridViewColumn Header="Контрагент" Width="100">
+                    <GridViewColumn Width="100">
+                        <GridViewColumn.Header>
+                            <TextBlock Text="Контрагент" TextWrapping="Wrap"/>
+                        </GridViewColumn.Header>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <local1:ComboTextBox SelectedItem="{Binding Contragent.Name}"/>
@@ -40,7 +60,10 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <!-- Колонка для Aggregate -->
-                    <GridViewColumn Header="№ агрегата" Width="75">
+                    <GridViewColumn Width="75">
+                        <GridViewColumn.Header>
+                            <TextBlock Text="№ агрегата" TextWrapping="Wrap"/>
+                        </GridViewColumn.Header>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <local1:ComboTextBox SelectedItem="{Binding Aggregate.Name}"/>
@@ -48,7 +71,10 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <!-- Колонка для Order -->
-                    <GridViewColumn Header="№ заказа" Width="75">
+                    <GridViewColumn Width="75">
+                        <GridViewColumn.Header>
+                            <TextBlock Text="№ заказа" TextWrapping="Wrap"/>
+                        </GridViewColumn.Header>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <local1:ComboTextBox SelectedItem="{Binding Order.Number}"/>
@@ -56,7 +82,10 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <!-- Колонка для GM -->
-                    <GridViewColumn Header="№ ГМ" Width="55">
+                    <GridViewColumn Width="55">
+                        <GridViewColumn.Header>
+                            <TextBlock Text="№ ГМ" TextWrapping="Wrap"/>
+                        </GridViewColumn.Header>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <local1:ComboTextBox SelectedItem="{Binding GM.Number}"/>
@@ -64,7 +93,10 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <!-- Колонка для SPU -->
-                    <GridViewColumn Header="Обозначение СПУ" Width="105">
+                    <GridViewColumn Width="105">
+                        <GridViewColumn.Header>
+                            <TextBlock Text="Обозначение СПУ" TextWrapping="Wrap"/>
+                        </GridViewColumn.Header>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <local1:ComboTextBox SelectedItem="{Binding SPU.Number}"/>
@@ -72,7 +104,10 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <!-- Колонка для SPU -->
-                    <GridViewColumn Header="Наименование СПУ" Width="115">
+                    <GridViewColumn Width="115">
+                        <GridViewColumn.Header>
+                            <TextBlock Text="Наименование СПУ" TextWrapping="Wrap"/>
+                        </GridViewColumn.Header>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBox Text="{Binding SPU.Name, UpdateSourceTrigger=PropertyChanged}" />
@@ -80,7 +115,10 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <!-- Колонка для Tara -->
-                    <GridViewColumn Header="Обозначение тары" Width="110">
+                    <GridViewColumn Width="100">
+                        <GridViewColumn.Header>
+                            <TextBlock Text="Обозначение тары" TextWrapping="Wrap"/>
+                        </GridViewColumn.Header>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <local1:ComboTextBox SelectedItem="{Binding Tara.Number}"/>
@@ -88,7 +126,10 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <!-- Колонка для Tara -->
-                    <GridViewColumn Header="Наименование тары" Width="110">
+                    <GridViewColumn Width="115">
+                        <GridViewColumn.Header>
+                            <TextBlock Text="Наименование тары" TextWrapping="Wrap"/>
+                        </GridViewColumn.Header>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBox Text="{Binding Tara.Name, UpdateSourceTrigger=PropertyChanged}" />
@@ -96,7 +137,10 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <!-- Колонка для CountNeed -->
-                    <GridViewColumn Header="Кол-во потребность" Width="70">
+                    <GridViewColumn Width="75">
+                        <GridViewColumn.Header>
+                            <TextBlock Text="Кол-во потребность" TextWrapping="Wrap"/>
+                        </GridViewColumn.Header>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBox Text="{Binding SPUTara.CountNeed, UpdateSourceTrigger=PropertyChanged}" />
@@ -104,7 +148,10 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <!-- Колонка для CountGet -->
-                    <GridViewColumn Header="Кол-во получено" Width="70">
+                    <GridViewColumn Width="70">
+                        <GridViewColumn.Header>
+                            <TextBlock Text="Кол-во получено" TextWrapping="Wrap"/>
+                        </GridViewColumn.Header>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBox Text="{Binding SPUTara.CountGet, UpdateSourceTrigger=PropertyChanged}" />
@@ -112,15 +159,13 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <!-- Колонка для Dificit -->
-                    <GridViewColumn Header="Дефицит" Width="55">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBox Text="{Binding SPUTara.Deficit, UpdateSourceTrigger=PropertyChanged}" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+                    <GridViewColumn Header="Дефицит" Width="55" DisplayMemberBinding="{Binding SPUTara.Deficit}"/>
+                    
                     <!-- Колонка для DemindNumber -->
-                    <GridViewColumn Header="№ требования" Width="60">
+                    <GridViewColumn Width="90">
+                        <GridViewColumn.Header>
+                            <TextBlock Text="№ требования" TextWrapping="Wrap"/>
+                        </GridViewColumn.Header>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBox Text="{Binding GM.DemindNumber, UpdateSourceTrigger=PropertyChanged}" />
@@ -128,7 +173,10 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <!-- Колонка для DemindDate-->
-                    <GridViewColumn Header="Дата требования" Width="60">
+                    <GridViewColumn Width="100">
+                        <GridViewColumn.Header>
+                            <TextBlock Text="Дата требования" TextWrapping="Wrap"/>
+                        </GridViewColumn.Header>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBox Text="{Binding GM.DemindData, UpdateSourceTrigger=PropertyChanged}" />
@@ -136,7 +184,10 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <!-- Колонка для GMDate1 -->
-                    <GridViewColumn Header="Плановый срок сдачи ГМ" Width="65">
+                    <GridViewColumn Width="95">
+                        <GridViewColumn.Header>
+                            <TextBlock Text="Плановый срок сдачи ГМ" TextWrapping="Wrap"/>
+                        </GridViewColumn.Header>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBox Text="{Binding GM.Date1, UpdateSourceTrigger=PropertyChanged}" />
@@ -144,7 +195,10 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <!-- Колонка для GMDate2 -->
-                    <GridViewColumn Header="Необходимый срок обеспечения" Width="65">
+                    <GridViewColumn Width="90">
+                        <GridViewColumn.Header>
+                            <TextBlock Text="Необходимый срок обеспечения" TextWrapping="Wrap"/>
+                        </GridViewColumn.Header>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBox Text="{Binding GM.Date2, UpdateSourceTrigger=PropertyChanged}" />
@@ -152,7 +206,10 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <!-- Колонка для GMDate3 -->
-                    <GridViewColumn Header="Обещанный срок обеспечения СМТС" Width="60">
+                    <GridViewColumn Width="95">
+                        <GridViewColumn.Header>
+                            <TextBlock Text="Обещаный срок обеспечения СМТС" TextWrapping="Wrap"/>
+                        </GridViewColumn.Header>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBox Text="{Binding GM.DemindNumber, UpdateSourceTrigger=PropertyChanged}" />
@@ -168,7 +225,10 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <!-- Колонка для GMDNackaldania -->
-                    <GridViewColumn Header="Накладая на сдачу ГМ в ООП" Width="70">
+                    <GridViewColumn Width="70">
+                        <GridViewColumn.Header>
+                            <TextBlock Text="Накладная на сдачу ГМ в ООП" TextWrapping="Wrap"/>
+                        </GridViewColumn.Header>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBox Text="{Binding GM.NackaldaiaNumber, UpdateSourceTrigger=PropertyChanged}" />
@@ -176,7 +236,10 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <!-- Колонка для GMDNackaldania -->
-                    <GridViewColumn Header="Дата накладной" Width="60">
+                    <GridViewColumn Width="70">
+                        <GridViewColumn.Header>
+                            <TextBlock Text="Дата накладной" TextWrapping="Wrap"/>
+                        </GridViewColumn.Header>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBox Text="{Binding GM.NackaldaiaDate, UpdateSourceTrigger=PropertyChanged}" />
@@ -184,7 +247,10 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <!-- Колонка для SZ -->
-                    <GridViewColumn Header="Служебная записка на запуск ППО" Width="60">
+                    <GridViewColumn Width="70">
+                        <GridViewColumn.Header>
+                            <TextBlock Text="Служебная записка на запуск ППО" TextWrapping="Wrap"/>
+                        </GridViewColumn.Header>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBox Text="{Binding GM.NackaldaiaDate, UpdateSourceTrigger=PropertyChanged}" />
@@ -192,7 +258,10 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <!-- Колонка для Что это -->
-                    <GridViewColumn Header="№ график сдачи ГМ (ПДО)" Width="60">
+                    <GridViewColumn Width="65">
+                        <GridViewColumn.Header>
+                            <TextBlock Text="№ график сдачи ГМ (ПДО)" TextWrapping="Wrap"/>
+                        </GridViewColumn.Header>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBox Text="{Binding GM.NackaldaiaDate, UpdateSourceTrigger=PropertyChanged}" />
@@ -200,7 +269,10 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <!-- Колонка для Резервное поле-->
-                    <GridViewColumn Header="Резервное поле" Width="70">
+                    <GridViewColumn Width="70">
+                        <GridViewColumn.Header>
+                            <TextBlock Text="Резервное поле" TextWrapping="Wrap"/>
+                        </GridViewColumn.Header>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBox Text="{Binding GM.RezervField, UpdateSourceTrigger=PropertyChanged}" />

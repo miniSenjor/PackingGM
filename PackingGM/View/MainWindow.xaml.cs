@@ -26,11 +26,14 @@ namespace PackingGM.View
             Navigation.RegisterPage(PageType.LoginView, new LoginView());
             Navigation.RegisterPage(PageType.MainView, new MainView());
             Navigation.RegisterPage(PageType.ManageRoleView, new ManageRoleView());
+            Navigation.RegisterPage(PageType.ManageUserView, new ManageUserView());
             Navigation.RegisterPage(PageType.ManageGraphView, new ManageGraphView());
             Navigation.RegisterPage(PageType.TestView, new TestView());
+            Navigation.RegisterPage(PageType.ManageGraphD3View, new ManageGraphD3View());
             Navigation.Initialize(MainFrame);
-            ///<summary>Открытие страницы с авторизацией</summary>
+            //Открытие страницы с авторизацией
             Navigation.Navigate(PageType.LoginView);
+            //Navigation.Navigate(PageType.ManageGraphD3View);
         }
     }
 }

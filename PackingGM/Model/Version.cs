@@ -20,6 +20,16 @@ namespace PackingGM.Model
                 OnPropertyChanged(nameof(Id));
             }
         }
+        private protected int _idTCS;
+        public virtual int IdTCS
+        {
+            get => _idTCS;
+            set
+            {
+                _idTCS = value;
+                OnPropertyChanged(nameof(IdTCS));
+            }
+        }
         private protected string _name;
         public virtual string Name
         {

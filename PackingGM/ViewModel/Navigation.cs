@@ -50,6 +50,7 @@ namespace PackingGM.ViewModel
         ManageGraphView,
         ManageRoleView,
         ManageUserView,
-        TestView
+        TestView,
+        ManageGraphD3View
     }
 }

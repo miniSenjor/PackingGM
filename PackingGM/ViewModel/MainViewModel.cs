@@ -40,8 +40,6 @@ namespace PackingGM.ViewModel
         }
         private void OpenChangeUser(object obj)
         {
-            MainWindow main = new MainWindow();
-            //main.ShowDialog();
             Navigation.Navigate(PageType.ManageUserView);
         }
         private RelayCommand _openChangeGraphCommand;
@@ -57,6 +55,20 @@ namespace PackingGM.ViewModel
         private void OpenChangeGraph(object obj)
         {
             Navigation.Navigate(PageType.ManageGraphView);
+        }
+        private RelayCommand _openChangeGraphD3Command;
+        public RelayCommand OpenChangeGraphD3Command
+        {
+            get
+            {
+                if (_openChangeGraphD3Command == null)
+                    _openChangeGraphD3Command = new RelayCommand(OpenChangeGraphD3);
+                return _openChangeGraphD3Command;
+            }
+        }
+        private void OpenChangeGraphD3(object obj)
+        {
+            Navigation.Navigate(PageType.ManageGraphD3View);
         }
         private RelayCommand _openTestCommand;
         public RelayCommand OpenTestCommand

@@ -128,21 +128,7 @@ namespace PackingGM.ViewModel
             //else mt.CurrentTheme = "Light";
         }
 
-        private RelayCommand _backCommand;
-        public RelayCommand BackCommand
-        {
-            get
-            {
-                if (_backCommand == null)
-                    _backCommand = new RelayCommand(Back);
-                return _backCommand;
-            }
-        }
-
-        private void Back(object obj)
-        {
-            Navigation.Navigate(PageType.MainView);
-        }
+        
         private void con()
         {
             try

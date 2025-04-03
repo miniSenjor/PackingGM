@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PackingGM.View.Control"
              mc:Ignorable="d" 
-             d:DesignHeight="30" d:DesignWidth="200">
+             d:DesignHeight="20" d:DesignWidth="200">
     <Grid>
         <StackPanel>
             <DockPanel>
@@ -21,6 +21,7 @@
                    Placement="Bottom"
                    StaysOpen="False">
                 <ListBox x:Name="lst"
+                         DisplayMemberPath="{Binding DisplayMemberPath, RelativeSource={RelativeSource AncestorType=UserControl}}"
                          SelectionChanged="ListBox_SelectionChanged"
                          MaxHeight="150"/>
             </Popup>

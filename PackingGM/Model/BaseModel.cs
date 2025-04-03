@@ -17,12 +17,12 @@ namespace PackingGM.Model
         /// <typeparam name="T"></typeparam>
         /// <param name="field">Название поля</param>
         /// <param name="newValue">Значение</param>
-        private protected virtual void SetField<T>(ref T field, T newValue)
+        private protected virtual void SetField<T>(ref T field, T newValue, string publicField)
         {
             if (!Equals(field, newValue))
             {
                 field = newValue;
-                //OnPropertyChanged();
+                OnPropertyChanged(publicField);
             }
         }
         /// <summary>
@@ -54,6 +54,8 @@ namespace PackingGM.Model
                 { 'х', 'x' },   // Русская 'х' -> английская 'x'
                 { 'в', 'b' },   // Русская 'в' -> английская 'b'
                 { 'м', 'm' },   // Русская 'м' -> английская 'm'
+                { 'к', 'k' },   // Русская 'к' -> английская 'k'
+                { 'з', '3' }   // Русская 'з' -> цифра '3'
             };
             return new string(text.Select(c => replacementMap.ContainsKey(c) ? replacementMap[c] : c).ToArray());
         }

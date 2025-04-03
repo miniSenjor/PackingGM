@@ -1,6 +1,7 @@
 ﻿using PackingGM.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
@@ -18,6 +19,20 @@ namespace PackingGM.ViewModel
             }
         }
         public ICollection<Record> ListGMs { get; set; }
+    }
+    public class GMTare : BaseModel
+    {
+        static private ObservableCollection<Manufactory> _listManufactories;
+        public ObservableCollection<Manufactory> ListManufactories
+        {
+            get => _listManufactories;
+            set
+            {
+                _listManufactories = value;
+                OnPropertyChanged(nameof(ListManufactories));
+            }
+        }
+        
     }
     public class Record : BaseModel
     {
