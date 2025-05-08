@@ -21,7 +21,7 @@ namespace PackingGM.ViewModel
             try
             {
                 _context = App.GetContext();
-                Roles = new ObservableCollection<Role>(_context.Roles.ToList());
+                //Roles = new ObservableCollection<Role>(_context.Roles.ToList());
                 //using (AppDb db = new AppDb())
                 //{
                 //    Roles = new ObservableCollection<Role>(db.Roles.ToList());
@@ -103,11 +103,11 @@ namespace PackingGM.ViewModel
 
         private void CreateRole(object obj)
         {
-            Roles = new ObservableCollection<Role>(_context.Roles.ToList());
-            foreach(Role role in _context.Roles.ToList())
-            {
-                Debug.Print(role.Name + role.IsAlowedViewing.ToString() + role.IsAlowedWriting.ToString() + role.IsAlowedAdmining.ToString());
-            }
+            //Roles = new ObservableCollection<Role>(_context.Roles.ToList());
+            //foreach(Role role in _context.Roles.ToList())
+            //{
+            //    Debug.Print(role.Name + role.IsAlowedViewing.ToString() + role.IsAlowedWriting.ToString() + role.IsAlowedAdmining.ToString());
+            //}
         }
         //private ManageTheme mt = new ManageTheme();
         private RelayCommand _changeThemeCommand;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 
@@ -20,8 +21,31 @@ namespace PackingGM.Model
                 OnPropertyChanged(nameof(Id));
             }
         }
-        private int _gMNumberId;
-        public int GMNumberId
+
+        private int? _orderAggregate_OrderId;
+        public int? OrderAggregate_OrderId
+        {
+            get => _orderAggregate_OrderId;
+            set
+            {
+                _orderAggregate_OrderId = value;
+                OnPropertyChanged(nameof(OrderAggregate_OrderId));
+            }
+        }
+        private int? _orderAggregate_AggregateId;
+        public int? OrderAggregate_AggregateId
+        {
+            get => _orderAggregate_AggregateId;
+            set
+            {
+                _orderAggregate_AggregateId = value;
+                OnPropertyChanged(nameof(OrderAggregate_AggregateId));
+            }
+        }
+
+
+        private int? _gMNumberId;
+        public int? GMNumberId
         {
             get => _gMNumberId;
             set
@@ -30,33 +54,27 @@ namespace PackingGM.Model
                 OnPropertyChanged(nameof(GMNumberId));
             }
         }
-        private int _sPUTareId;
-        public int SPUTareId
+        private int? _manufactoryId;
+        public int? ManufactoryId
         {
-            get => _sPUTareId;
-            set
-            {
-                _sPUTareId = value;
-                OnPropertyChanged(nameof(SPUTareId));
-            }
+            get => _manufactoryId;
+            set => SetField(ref _manufactoryId, value, nameof(ManufactoryId));
         }
-        private int _countGet;
-        public int CountGet
+        private string _pr;
+        /// <summary>
+        /// Признак актуальности
+        /// Д3
+        /// </summary>
+        public string PR
         {
-            get => _countGet;
-            set
-            {
-                if (value > SPUTare.CountNeed)
-                    throw new ArgumentOutOfRangeException("Нельзя задать количество полученой тары больше требуемой");
-                _countGet = value;
-                OnPropertyChanged(nameof(CountGet));
-            }
-        }
-        public int Deficit
-        {
-            get => SPUTare.CountNeed - CountGet;
+            get => _pr;
+            set => SetField(ref _pr, value, nameof(PR));
         }
         private DateTime _plannedDeadline;
+        /// <summary>
+        /// Плановый срок сдачи ГМ
+        /// Д3 Тара
+        /// </summary>
         public DateTime PlannedDeadline
         {
             get => _plannedDeadline;
@@ -66,13 +84,75 @@ namespace PackingGM.Model
                 OnPropertyChanged(nameof(PlannedDeadline));
             }
         }
-        public DateTime ProvisionPeriod
+        /// <summary>
+        /// Необходимый срок обеспечения
+        /// Тара
+        /// </summary>
+        public DateTime NecessaryProvisionPeriod
         {
-            get => PlannedDeadline.AddDays(-14);
+            get
+            {
+                try
+                {
+                    return PlannedDeadline.AddDays(-14);
+                }
+                catch
+                {
+                    return PlannedDeadline;
+                }
+            }
         }
+        private int? _waybill;
+        /// <summary>
+        /// Накладная
+        /// Д3 Тара
+        /// </summary>
+        public int? Waybill
+        {
+            get => _waybill;
+            set
+            {
+                SetField(ref _waybill, value, nameof(Waybill));
+            }
+        }
+        private DateTime _waybillDate;
+        /// <summary>
+        /// Дата накладной
+        /// Д3 Тара
+        /// </summary>
+        public DateTime WaybillDate
+        {
+            get => _waybillDate;
+            set
+            {
+                SetField(ref _waybillDate, value, nameof(WaybillDate));
+            }
+        }
+        /// <summary>
+        /// Факт-неделя накладной
+        /// </summary>
+        public int FactWeek
+        {
+            get => WaybillDate.DayOfYear / 7;
+        }
+        private string _whyDelay;
+        /// <summary>
+        /// Причина задержки
+        /// Д3
+        /// </summary>
+        public string WhyDelay
+        {
+            get => _whyDelay;
+            set
+            {
+                SetField(ref _whyDelay, value, nameof(WhyDelay));
+            }
+        }
+
         public GMNumber GMNumber { get; set; }
-        public SPUTare SPUTare { get; set; }
+        public ICollection<GMTare> GMTares { get; set; }
+        [ForeignKey("OrderAggregate_OrderId, OrderAggregate_AggregateId")]
         public OrderAggregate OrderAggregate { get; set; }
-        public ICollection<ManufactoryGM> ManufactoryGMs { get; set; }
+        public Manufactory Manufactory { get; set; }
     }
 }

@@ -26,21 +26,16 @@ namespace PackingGM.Model
             get => _number;
             set
             {
-                _number = value;
-                OnPropertyChanged(nameof(Number));
+                SetField(ref _number, value, nameof(Number));
             }
         }
-        private int _drawingNameId;
-        public Nullable<int> DrawingNameId
+        private int? _aggregateTypeId;
+        public int? AggregateTypeId
         {
-            get => _drawingNameId;
-            set
-            {
-                _drawingNameId = (int)value;
-                OnPropertyChanged(nameof(DrawingNameId));
-            }
+            get => _aggregateTypeId;
+            set => SetField(ref _aggregateTypeId, value, nameof(AggregateTypeId));
         }
-        public DrawingName DrawingName { get; set; }
+        public AggregateType AggregateType { get; set; }
         public ICollection<OrderAggregate> OrderAggregates { get; set; }
     }
 }

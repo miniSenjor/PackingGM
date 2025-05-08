@@ -20,8 +20,8 @@ namespace PackingGM.Model
                 OnPropertyChanged(nameof(Id));
             }
         }
-        private int _number;
-        public int Number
+        private string _number;
+        public string Number
         {
             get => _number;
             set
@@ -30,13 +30,13 @@ namespace PackingGM.Model
                 OnPropertyChanged(nameof(Number));
             }
         }
-        private int _contragentId;
-        public Nullable<int> ContragentId
+        private int? _contragentId;
+        public int? ContragentId
         {
             get => _contragentId;
             set
             {
-                _contragentId = (int)value;
+                _contragentId = value;
                 OnPropertyChanged(nameof(ContragentId));
             }
         }

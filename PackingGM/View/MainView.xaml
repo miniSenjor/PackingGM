@@ -6,32 +6,39 @@
       xmlns:local="clr-namespace:PackingGM.View"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="MainView"
-      Style="{DynamicResource PageStyle}">
+      Title="MainView">
 
-    <Grid>
+    <Grid Style="{DynamicResource GridStyle}">
         <Grid.RowDefinitions>
             <RowDefinition Height="70"/>
             <RowDefinition/>
             <RowDefinition Height="70"/>
         </Grid.RowDefinitions>
-        <TextBlock Text="Главное окно" Grid.Row="0"/>
+        <DockPanel Grid.Row="0">
+            <Button Content="Выход"
+                    Style="{DynamicResource ButtonNoStyle}"
+                    Command="{Binding ExitCommand}"
+                    Width="60"
+                    Height="40"
+                    DockPanel.Dock="Right"/>
+            <TextBlock Text="Меню"
+                       DockPanel.Dock="Left"
+                       Style="{DynamicResource TextBlockHeadStyle}"
+                       FontSize="25"/>
+        </DockPanel>
         <StackPanel Grid.Row="1" Width="250">
-            <Button Command="{Binding OpenChangeRoleCommand}">
-                Управление ролями
-            </Button>
-            <Button Command="{Binding OpenChangeUserCommand}">
-                Управление пользователями
-            </Button>
-            <Button Command="{Binding OpenChangeGraphCommand}">
-                Управление графиком
-            </Button>
-            <Button Command="{Binding OpenChangeGraphD3Command}">
-                Управление графиком Д3
-            </Button>
-            <Button Command="{Binding OpenTestCommand}">
-                Тест
-            </Button>
+            <Button Command="{Binding OpenChangeUserCommand}"
+                    Content="Управление пользователями"
+                    Visibility="{Binding IsAlowedAdmining}"/>
+            <Button Command="{Binding OpenChangeGraphCommand}"
+                    Content="Управление графиком Тара"
+                    Visibility="{Binding IsAlowedViewing}"/>
+            <Button Command="{Binding OpenChangeGraphD3Command}"
+                    Content="Управление графиком Д3"
+                    Visibility="{Binding IsAlowedViewing}"/>
+            <Button Command="{Binding OpenTestCommand}"
+                    Content="Заполнение бд"
+                    Visibility="{Binding IsAlowedAdmining}"/>
         </StackPanel>
     </Grid>
 </Page>

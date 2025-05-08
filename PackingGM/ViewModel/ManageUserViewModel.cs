@@ -18,14 +18,16 @@ namespace PackingGM.ViewModel
             try
             {
                 _context = App.GetContext();
-                Users = new ObservableCollection<User>(_context.Users.ToList());
+                Users = new ObservableCollection<User>(_context.Users
+                    .Include("Manufactory")
+                    .ToList());
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
                 Users = new ObservableCollection<User>();
                 for (int i = 1; i < 5; i++)
-                    Users.Add(new User(i));
+                    Users.Add(new User());
             }
         }
 
@@ -34,11 +36,19 @@ namespace PackingGM.ViewModel
         public ObservableCollection<User> Users
         {
             get => _users;
-            set
-            {
-                _users = value;
-                OnPropertyChanged(nameof(Users));
-            }
+            set => SetField(ref _users, value, nameof(Users));
+        }
+        private User _selectedUser;
+        public User SelectedUser
+        {
+            get => _selectedUser;
+            set => SetField(ref _selectedUser, value, nameof(SelectedUser));
+        }
+        private ObservableCollection<Manufactory> _manufactories;
+        public ObservableCollection<Manufactory> Manufactories
+        {
+            get => _manufactories ?? (_manufactories = new ObservableCollection<Manufactory>(_context.Manufactories));
+            set => SetField(ref _manufactories, value, nameof(Manufactories));
         }
         public string SearchText { get; set; }
         private RelayCommand _saveCommand;
@@ -75,11 +85,11 @@ namespace PackingGM.ViewModel
                 return _createUserCommand;
             }
         }
-
         private void CreateUser(object obj)
         {
             ChangeUserWindow changeUserWindow = new ChangeUserWindow();
             changeUserWindow.ShowDialog();
+            OnPropertyChanged(nameof(Users));
         }
 
         private RelayCommand _searchUserCommand;
@@ -94,23 +104,31 @@ namespace PackingGM.ViewModel
         }
         private void SearchUser(object obj)
         {
-            Users = new ObservableCollection<User>(_context.Users.Where(u => u.Login.Contains(SearchText)).ToList());
+            if (SearchText != "")
+                Users = new ObservableCollection<User>(_context.Users.Where(u => u.Login.Contains(SearchText)).ToList());
+            else
+                Users = new ObservableCollection<User>(_context.Users);
         }
 
-        private RelayCommand _backCommand;
-        public RelayCommand BackCommand
+        private RelayCommand _deleteUserCommand;
+        public RelayCommand DeleteUserCommand
         {
             get
             {
-                if (_backCommand == null)
-                    _backCommand = new RelayCommand(Back);
-                return _backCommand;
+                if (_deleteUserCommand == null)
+                    _deleteUserCommand = new RelayCommand(DeleteUser);
+                return _deleteUserCommand;
             }
         }
-
-        private void Back(object obj)
+        private void DeleteUser(object obj)
         {
-            Navigation.Navigate(PageType.MainView);
+            if (SelectedUser != null && _context.Users.Contains(SelectedUser))
+            {
+                _context.Users.Remove(SelectedUser);
+                SelectedUser = null;
+            }
+            else
+                StateApp.Instance.ChangeText("Пользователь не выбран или уже удален");
         }
     }
 }

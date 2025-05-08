@@ -6,10 +6,9 @@
       xmlns:local="clr-namespace:PackingGM.View"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="ManageRoleView"
-      Style="{DynamicResource PageStyle}">
+      Title="ManageRoleView">
 
-    <Grid>
+    <Grid Style="{DynamicResource GridStyle}">
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
             <RowDefinition/>
@@ -24,7 +23,7 @@
                     Content="Назад"/>
             <StackPanel DockPanel.Dock="Top">
                 <TextBlock Text="Управление ролями"
-                           Style="{DynamicResource TextBlockStyle}"
+                           Style="{DynamicResource TextBlockHeadStyle}"
                            FontSize="26" 
                            Grid.Row="1"/>
                 <Button Command="{Binding SaveCommand}"

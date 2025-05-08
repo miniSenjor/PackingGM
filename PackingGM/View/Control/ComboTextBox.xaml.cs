@@ -66,7 +66,7 @@ namespace PackingGM.View.Control
             // Обновляем TextBox только если значение действительно изменилось
             if (!Equals(lst.SelectedItem, newValue))
             {
-                lst.SelectedItem = newValue;
+                SelectedItem = newValue;
 
                 if (newValue != null && !string.IsNullOrEmpty(DisplayMemberPath))
                 {
@@ -90,6 +90,7 @@ namespace PackingGM.View.Control
                     var property = SelectedItem.GetType().GetProperty(DisplayMemberPath);
                     txt.Text = property?.GetValue(SelectedItem, null)?.ToString() ?? "";
                 }
+                ItemsPopup.IsOpen = false;
             }
         }
 
@@ -151,11 +152,11 @@ namespace PackingGM.View.Control
             }
             else
             {
+                    return;
                 //доделать что бы при вводе и снятия фокуса выбирался элемент из списка
                 foreach(var item in lst.ItemsSource)
                 {
-                    SelectedItem = item;
-                    return;
+                    //SelectedItem = item;
                 }
             }
         }
@@ -163,7 +164,10 @@ namespace PackingGM.View.Control
         private List<object> SearchInList(string searchText)
         {
             if (searchText == "")
-                return ItemsSource.ToList();
+                if (ItemsSource == null || string.IsNullOrEmpty(DisplayMemberPath))
+                    return new List<object>();
+                else
+                    return ItemsSource.ToList();
 
             if (ItemsSource == null || string.IsNullOrEmpty(DisplayMemberPath))
                 return new List<object>();
@@ -205,8 +209,13 @@ namespace PackingGM.View.Control
                 { 'к', 'k' },   // Русская 'к' -> английская 'k'
                 { 'з', '3' }   // Русская 'з' -> цифра '3'
             };
-            return new string(text.Select(c => replacementMap.ContainsKey(c) ? replacementMap[c] : c).ToArray());
+            return new string(text.Trim(' ').Select(c => replacementMap.ContainsKey(c) ? replacementMap[c] : c).ToArray());
         }
 
+        private void StackPanel_Loaded(object sender, RoutedEventArgs e)
+        {
+            UpdateSelectedItem(SelectedItem);
+            ItemsPopup.IsOpen = false;
+        }
     }
 }

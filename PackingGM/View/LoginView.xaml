@@ -7,16 +7,15 @@
       xmlns:model="clr-namespace:PackingGM.Model"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="LoginView"
-      Style="{DynamicResource PageStyle}">
-    <Grid>
+      Title="LoginView">
+    <Grid Style="{DynamicResource GridStyle}">
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
             <RowDefinition/>
             <RowDefinition Height="16"/>
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0"
-                   Style="{DynamicResource TextBlockStyle}"
+                   Style="{DynamicResource TextBlockHeadStyle}"
                    FontSize="30"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"

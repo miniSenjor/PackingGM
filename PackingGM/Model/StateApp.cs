@@ -25,11 +25,7 @@ namespace PackingGM.Model
         public string Text
         {
             get => _text;
-            set
-            {
-                _text = value;
-                OnPropertyChanged(nameof(Text));
-            }
+            set => SetField(ref _text, value, nameof(Text));
         }
         private SolidColorBrush _color;
         public SolidColorBrush Color
@@ -40,6 +36,11 @@ namespace PackingGM.Model
                 _color = value;
                 OnPropertyChanged(nameof(Color));
             }
+        }
+        public void ChangeText(string text)
+        {
+            Text = text;
+            OnPropertyChanged(nameof(Text));
         }
         public void ChangeAll(string text, string color)
         {

@@ -8,59 +8,118 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ManageUserView">
 
-    <Grid Background="{DynamicResource BackgroundBrush}">
+    <Grid Style="{DynamicResource GridStyle}">
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <DockPanel Grid.Row="0">
             <Button Command="{Binding BackCommand}"
+                    Style="{DynamicResource ButtonNoStyle}"
                     DockPanel.Dock="Left"
                     Height="40"
-                    VerticalAlignment="Top">
-                Назад
-            </Button>
+                    VerticalAlignment="Top"
+                    Content="Назад"/>
+
             <StackPanel DockPanel.Dock="Top">
                 <TextBlock Text="Управление пользователями"
-                           Style="{DynamicResource TextBlockStyle}"
+                           Style="{DynamicResource TextBlockHeadStyle}"
                            FontSize="26" 
                            Grid.Row="1"/>
-                <DockPanel Width="500">
+                <DockPanel Width="450" Margin="0 5">
                     <TextBox Text="{Binding SearchText}"
                              DockPanel.Dock="Left"
                              Width="350"/>
                     <Button Command="{Binding SearchUserCommand}"
+                            Style="{DynamicResource ButtonYesStyle}"
                             DockPanel.Dock="Right"
-                            Width="60">
-                        Поиск
-                    </Button>
+                            Width="60"
+                            Content="Поиск"/>
                 </DockPanel>
-                <Button Command="{Binding SaveCommand}"
-                        Style="{DynamicResource ButtonStyle}"
-                        Background="{DynamicResource BackgroundBrush}"
-                        Width="150">
-                    Сохранить изменения
-                </Button>
-                <Button Command="{Binding CreateUserCommand}"
-                        Style="{DynamicResource ButtonStyle}"
-                        Background="{DynamicResource BackgroundBrush}"
-                        Width="150">
-                    Создать пользователя
-                </Button>
+                <StackPanel Orientation="Horizontal" Margin="0 5">
+                    <Button Command="{Binding SaveCommand}"
+                            Style="{DynamicResource ButtonYesStyle}"
+                            Background="{DynamicResource BackgroundBrush}"
+                            Width="150"
+                            Content="Сохранить изменения"/>
+                    <Button Command="{Binding CreateUserCommand}"
+                            Style="{DynamicResource ButtonYesStyle}"
+                            Background="{DynamicResource BackgroundBrush}"
+                            Width="150"
+                            Content="Создать пользователя"/>
+                    <Button Command="{Binding DeleteUserCommand}"
+                            Style="{DynamicResource ButtonYesStyle}"
+                            Background="{DynamicResource BackgroundBrush}"
+                            Width="150"
+                            Content="Удалить пользователя"/>
+                </StackPanel>
             </StackPanel>
         </DockPanel>
-        <ListView ItemsSource="{Binding Users}" 
+        <ListView ItemsSource="{Binding Users}"
+                  SelectedItem="{Binding SelectedUser}"
                   Grid.Row="1"
+                  Style="{DynamicResource ListViewStyle}"
                   ScrollViewer.HorizontalScrollBarVisibility="Auto">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Login}"/>
-                        <TextBlock Text=" Роль"/>
-                        <TextBlock Text="{Binding Role.Name}"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="100">
+                        <GridViewColumn.Header>
+                            <TextBlock Text="Логин"/>
+                        </GridViewColumn.Header>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Login}" Style="{DynamicResource TextBlockStyle}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    
+                    <GridViewColumn Width="80">
+                        <GridViewColumn.Header>
+                            <TextBlock Text="Просмотр"/>
+                        </GridViewColumn.Header>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding IsAlowedViewing}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    
+                    <GridViewColumn Width="100">
+                        <GridViewColumn.Header>
+                            <TextBlock Text="Редактирование"/>
+                        </GridViewColumn.Header>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding IsAlowedWriting}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    
+                    <GridViewColumn Width="120">
+                        <GridViewColumn.Header>
+                            <TextBlock Text="Администрирование"/>
+                        </GridViewColumn.Header>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding IsAlowedAdmining}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    
+                    <GridViewColumn Width="100">
+                        <GridViewColumn.Header>
+                            <TextBlock Text="Цех"/>
+                        </GridViewColumn.Header>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <ComboBox SelectedItem="{Binding Manufactory}" 
+                                          ItemsSource="{Binding DataContext.Manufactories, RelativeSource={RelativeSource AncestorType=Page}}"
+                                          DisplayMemberPath="Number"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
         </ListView>
     </Grid>
 </Page>

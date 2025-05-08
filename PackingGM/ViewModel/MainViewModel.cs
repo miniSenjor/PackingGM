@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PackingGM.ViewModel
 {
-    public class MainViewModel
+    public class MainViewModel : BaseViewModel
     {
         public MainViewModel()
         {
@@ -25,7 +25,7 @@ namespace PackingGM.ViewModel
         }
         private void OpenChangeRole(object obj)
         {
-            Navigation.Navigate(PageType.ManageRoleView);
+            //Navigation.Navigate(PageType.ManageRoleView);
         }
 
         private RelayCommand _openChangeUserCommand;
@@ -83,6 +83,21 @@ namespace PackingGM.ViewModel
         private void OpenTest(object obj)
         {
             Navigation.Navigate(PageType.TestView);
+        }
+        private RelayCommand _exitCommand;
+        public RelayCommand ExitCommand
+        {
+            get
+            {
+                if (_exitCommand == null)
+                    _exitCommand = new RelayCommand(Exit);
+                return _exitCommand;
+            }
+        }
+        private void Exit(object obj)
+        {
+            Navigation.Navigate(PageType.LoginView);
+            Model.CurrentUser.User = null;
         }
     }
 }

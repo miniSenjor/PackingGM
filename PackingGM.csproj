@@ -1,0 +1,287 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C8D344B2-4945-4706-861B-966573EC5923}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>PackingGM</RootNamespace>
+    <AssemblyName>PackingGM</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net40\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Security, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\packages\Npgsql.2.2.7\lib\net40\Mono.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Npgsql, Version=2.2.7.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Npgsql.2.2.7\lib\net40\Npgsql.dll</HintPath>
+    </Reference>
+    <Reference Include="Npgsql.EntityFramework, Version=2.2.7.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Npgsql.EntityFramework.2.2.7\lib\net40\Npgsql.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Migrations\202503280648515_InitialCreate.cs" />
+    <Compile Include="Migrations\202503280648515_InitialCreate.Designer.cs">
+      <DependentUpon>202503280648515_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202504030839495_AddNullValueForGM.cs" />
+    <Compile Include="Migrations\202504030839495_AddNullValueForGM.Designer.cs">
+      <DependentUpon>202504030839495_AddNullValueForGM.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202504081030222_DeleteTableManufactoryGM.cs" />
+    <Compile Include="Migrations\202504081030222_DeleteTableManufactoryGM.Designer.cs">
+      <DependentUpon>202504081030222_DeleteTableManufactoryGM.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202504081151460_AddOtherFieldForGM.cs" />
+    <Compile Include="Migrations\202504081151460_AddOtherFieldForGM.Designer.cs">
+      <DependentUpon>202504081151460_AddOtherFieldForGM.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202504091025278_ChangeNumberOrderToStr.cs" />
+    <Compile Include="Migrations\202504091025278_ChangeNumberOrderToStr.Designer.cs">
+      <DependentUpon>202504091025278_ChangeNumberOrderToStr.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202504240511238_DeleteDrawingName.cs" />
+    <Compile Include="Migrations\202504240511238_DeleteDrawingName.Designer.cs">
+      <DependentUpon>202504240511238_DeleteDrawingName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202504280750141_DeleteRole.cs" />
+    <Compile Include="Migrations\202504280750141_DeleteRole.Designer.cs">
+      <DependentUpon>202504280750141_DeleteRole.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202504300819076_UpdateGMForTare.cs" />
+    <Compile Include="Migrations\202504300819076_UpdateGMForTare.Designer.cs">
+      <DependentUpon>202504300819076_UpdateGMForTare.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202504301128365_UpdateGMAddReserveFieldAndDemind.cs" />
+    <Compile Include="Migrations\202504301128365_UpdateGMAddReserveFieldAndDemind.Designer.cs">
+      <DependentUpon>202504301128365_UpdateGMAddReserveFieldAndDemind.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Model\Aggregate.cs" />
+    <Compile Include="Model\AggregateType.cs" />
+    <Compile Include="Model\D3Version.cs" />
+    <Compile Include="Model\DrawingNameVersion.cs" />
+    <Compile Include="Model\GM.cs" />
+    <Compile Include="Model\DrawingName.cs" />
+    <Compile Include="Model\DrawingNameD3.cs" />
+    <Compile Include="Model\GMNumber.cs" />
+    <Compile Include="Model\Manufactory.cs" />
+    <Compile Include="Model\ManufactoryGM.cs" />
+    <Compile Include="Model\NMK.cs" />
+    <Compile Include="Model\Order.cs" />
+    <Compile Include="Model\Contragent.cs" />
+    <Compile Include="Model\OrderAggregate.cs" />
+    <Compile Include="Model\Request.cs" />
+    <Compile Include="Model\Response.cs" />
+    <Compile Include="Model\SPU.cs" />
+    <Compile Include="Model\SPUTare.cs" />
+    <Compile Include="Model\SPUVersion.cs" />
+    <Compile Include="Model\StateApp.cs" />
+    <Compile Include="Model\Tare.cs" />
+    <Compile Include="Model\Test.cs" />
+    <Compile Include="Model\D3.cs" />
+    <Compile Include="Model\Version.cs" />
+    <Compile Include="ViewModel\BaseViewModel.cs" />
+    <Compile Include="ViewModel\ChangeUserWindowModel.cs" />
+    <Compile Include="ViewModel\EntityUIUpdater.cs" />
+    <Compile Include="ViewModel\LoginViewModel.cs" />
+    <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\ManageGraphD3ViewModel.cs" />
+    <Compile Include="ViewModel\ManageGraphViewModel.cs" />
+    <Compile Include="ViewModel\ManageRoleViewModel.cs" />
+    <Compile Include="ViewModel\ManageUserViewModel.cs" />
+    <Compile Include="ViewModel\Navigation.cs" />
+    <Compile Include="ViewModel\RelayCommand.cs" />
+    <Compile Include="ViewModel\Testing.cs" />
+    <Compile Include="ViewModel\TestViewModel.cs" />
+    <Compile Include="View\ChangeUserWindow.xaml.cs">
+      <DependentUpon>ChangeUserWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ManageGraphD3View.xaml.cs">
+      <DependentUpon>ManageGraphD3View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ManageGraphView.xaml.cs">
+      <DependentUpon>ManageGraphView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ManageRoleView.xaml.cs">
+      <DependentUpon>ManageRoleView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ManageUserView.xaml.cs">
+      <DependentUpon>ManageUserView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TestView.xaml.cs">
+      <DependentUpon>TestView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Control\ComboTextBox.xaml.cs">
+      <DependentUpon>ComboTextBox.xaml</DependentUpon>
+    </Compile>
+    <Page Include="View\ChangeUserWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\LoginView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Data\AppDb.cs" />
+    <Compile Include="View\LoginView.xaml.cs">
+      <DependentUpon>LoginView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MainView.xaml.cs">
+      <DependentUpon>MainView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="View\ManageGraphD3View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ManageGraphView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ManageRoleView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ManageUserView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TestView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Theme\DarkTheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Control\ComboTextBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Model\BaseModel.cs" />
+    <Compile Include="Model\CurrentUser.cs" />
+    <Compile Include="Model\Role.cs" />
+    <Compile Include="Model\User.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Migrations\202503280648515_InitialCreate.resx">
+      <DependentUpon>202503280648515_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202504030839495_AddNullValueForGM.resx">
+      <DependentUpon>202504030839495_AddNullValueForGM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202504081030222_DeleteTableManufactoryGM.resx">
+      <DependentUpon>202504081030222_DeleteTableManufactoryGM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202504081151460_AddOtherFieldForGM.resx">
+      <DependentUpon>202504081151460_AddOtherFieldForGM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202504091025278_ChangeNumberOrderToStr.resx">
+      <DependentUpon>202504091025278_ChangeNumberOrderToStr.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202504240511238_DeleteDrawingName.resx">
+      <DependentUpon>202504240511238_DeleteDrawingName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202504280750141_DeleteRole.resx">
+      <DependentUpon>202504280750141_DeleteRole.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202504300819076_UpdateGMForTare.resx">
+      <DependentUpon>202504300819076_UpdateGMForTare.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202504301128365_UpdateGMAddReserveFieldAndDemind.resx">
+      <DependentUpon>202504301128365_UpdateGMAddReserveFieldAndDemind.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="TCS\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

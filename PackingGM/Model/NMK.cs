@@ -14,41 +14,25 @@ namespace PackingGM.Model
         public virtual int Id
         {
             get => _id;
-            set
-            {
-                _id = value;
-                OnPropertyChanged(nameof(Id));
-            }
+            set => SetField(ref _id, value, nameof(Id));
         }
         private protected string _normalizedText;
         public virtual string NormalizedText
         {
             get => _normalizedText;
-            set
-            {
-                _normalizedText = NormalizeText(value);
-                OnPropertyChanged(nameof(NormalizedText));
-            }
+            set => SetField(ref _normalizedText, NormalizeText(value), nameof(NormalizedText));
         }
         private protected string _note;
         public virtual string Note
         {
             get => _note;
-            set
-            {
-                _note = value;
-                OnPropertyChanged(nameof(Note));
-            }
+            set => SetField(ref _note, value, nameof(Note));
         }
         private protected string _name;
         public virtual string Name
         {
             get => _name;
-            set
-            {
-                _name = value;
-                OnPropertyChanged(nameof(Name));
-            }
+            set => SetField(ref _name, value, nameof(Name));
         }
     }
 }

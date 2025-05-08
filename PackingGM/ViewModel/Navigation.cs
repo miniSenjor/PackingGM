@@ -31,7 +31,26 @@ namespace PackingGM.ViewModel
             if (_mainFrame == null)
                 throw new InvalidOperationException("Frame не инициализирован");
             //_mainFrame.Content = null;
+
+            if (!_pages.ContainsKey(pageType))
+            {
+                string typeName = pageType.ToString();
+                var type = Type.GetType($"PackingGM.View.{typeName}");
+                if (type == null)
+                    throw new InvalidOperationException($"Класс {typeName} не найден");
+                var instanse = Activator.CreateInstance(type) as Page;
+                RegisterPage(pageType, instanse);
+            }
             _mainFrame.Navigate(_pages[pageType]);
+            //if(thisPage!=null && Enum.TryParse<PageType>(thisPage, out var page))
+            //{
+            //    _pages.Remove(page);
+            //}
+            //else
+            //{
+            //    //throw new InvalidOperationException($"Страница {thisPage} не найденa");
+            //}
+
             //_mainFrame.Content = page;
             //Debug.Print(_mainFrame.CanGoBack.ToString());
             //_mainFrame.NavigationService.RemoveBackEntry();
@@ -48,7 +67,6 @@ namespace PackingGM.ViewModel
         LoginView,
         MainView,
         ManageGraphView,
-        ManageRoleView,
         ManageUserView,
         TestView,
         ManageGraphD3View

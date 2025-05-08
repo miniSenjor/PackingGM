@@ -9,8 +9,23 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="TestView">
 
-    <Grid Background="White">
-        <StackPanel>
+    <Grid Style="{DynamicResource GridStyle}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <Button Command="{Binding BackCommand}"
+                    Style="{DynamicResource ButtonYesStyle}"
+                    Content="Назад"
+                    Width="50"
+                    HorizontalAlignment="Left"/>
+            <TextBlock Text="Страница заполнения бд"
+                       Style="{DynamicResource TextBlockHeadStyle}"
+                       FontSize="20"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1">
+            <TextBlock Text="Таблица для заполнения" Style="{DynamicResource TextBlockStyle}"/>
             <TextBox Text="{Binding Query}"/>
             <Button Command="{Binding RunQueryCommand}"
                     Content="Выполнить"/>

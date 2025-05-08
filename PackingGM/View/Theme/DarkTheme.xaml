@@ -1,10 +1,19 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:PackingGM.View.Theme">
+    <!--Лучше использовать стиль для Grid т.к. удобнее копировать разметку-->
     <Style x:Key="PageStyle" TargetType="Page">
         <Setter Property="Background" Value="{DynamicResource MainGrayBrush}" />
     </Style>
+    <Style x:Key="GridStyle" TargetType="Grid">
+        <Setter Property="Background" Value="{DynamicResource MainGrayBrush}"/>
+    </Style>
     <Style x:Key="TextBlockStyle" TargetType="TextBlock">
+        <Setter Property="Background" Value="{DynamicResource MainGrayBrush}" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="FontFamily" Value="Segoe UI"/>
+    </Style>
+    <Style x:Key="TextBlockHeadStyle" TargetType="TextBlock">
         <Setter Property="Background" Value="{DynamicResource MainGrayBrush}" />
         <Setter Property="Foreground" Value="White" />
         <Setter Property="FontFamily" Value="Segoe UI Black"/>
@@ -19,12 +28,22 @@
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="BorderBrush" Value="{DynamicResource BlueBrush}"/>
         <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource LightGrayBrush}"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
     <Style x:Key="ButtonNoStyle" TargetType="Button">
         <Setter Property="Background" Value="{DynamicResource GrayBrush}"/>
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="BorderBrush" Value="{DynamicResource LightGrayBrush}"/>
         <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Style.Triggers><!--Почему-то не работают триггеры-->
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource LightGrayBrush}"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
     <Style x:Key="ListViewStyle" TargetType="ListView">
         <Setter Property="Background" Value="{DynamicResource GrayBrush}"/>

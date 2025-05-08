@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Security.Cryptography;
 using System.Diagnostics;
@@ -110,7 +107,7 @@ namespace PackingGM.ViewModel
             }
             catch (InvalidOperationException ex)
             {
-                e.Result = ex;
+                e.Result = new InvalidOperationException("База данных не соответсвует моделям приложения. Обратитесь к администратору");
             }
         }
         private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -132,6 +129,9 @@ namespace PackingGM.ViewModel
             {
                 StateApp.Instance.ChangeAll("Успешный вход!", "blue");
                 Navigation.Navigate(PageType.MainView);
+
+                LogUser = new User();
+                OnPropertyChanged(nameof(LogUser));
             }
         }
 

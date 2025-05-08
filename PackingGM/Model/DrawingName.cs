@@ -10,13 +10,13 @@ namespace PackingGM.Model
     /// </summary>
     public class DrawingName : NMK
     {
-        private int _aggregateTypeId;
-        public Nullable<int> AggregateTypeId
+        private int? _aggregateTypeId;
+        public int? AggregateTypeId
         {
             get => _aggregateTypeId;
             set
             {
-                _aggregateTypeId = (int)value;
+                _aggregateTypeId = value;
                 OnPropertyChanged(nameof(AggregateTypeId));
             }
         }

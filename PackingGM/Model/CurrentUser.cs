@@ -5,8 +5,44 @@ using System.Text;
 
 namespace PackingGM.Model
 {
-    public class CurrentUser
+    public class CurrentUser : BaseModel
     {
-        public static User User { get; set; }
+        private static User _user;
+        public static User User
+        {
+            get => _user;
+            set
+            {
+                if (_user != value)
+                {
+                    _user = value;
+                    OnStaticPropertyChanged(nameof(User));
+                }
+            }
+        }
+        public static System.Windows.Visibility GetVisibility(string field)
+        {
+            bool visibility = false;
+            try
+            {
+                switch (field)
+                {
+                    case "IsAlowedAdmining":
+                        visibility = User.IsAlowedAdmining;
+                        break;
+                    case "IsAlowedWriting":
+                        visibility = User.IsAlowedWriting;
+                        break;
+                    case "IsAlowedViewing":
+                        visibility = User.IsAlowedWriting;
+                        break;
+                }
+            }
+            catch { }
+            if (visibility)
+                return System.Windows.Visibility.Visible;
+            else
+                return System.Windows.Visibility.Collapsed;
+        }
     }
 }

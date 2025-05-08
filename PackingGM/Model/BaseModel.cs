@@ -17,13 +17,16 @@ namespace PackingGM.Model
         /// <typeparam name="T"></typeparam>
         /// <param name="field">Название поля</param>
         /// <param name="newValue">Значение</param>
-        private protected virtual void SetField<T>(ref T field, T newValue, string publicField)
+        private protected virtual bool SetField<T>(ref T field, T newValue, string publicField)
         {
             if (!Equals(field, newValue))
             {
                 field = newValue;
                 OnPropertyChanged(publicField);
+                return true;
             }
+            else
+                return false;
         }
         /// <summary>
         /// Ивент сообщающий об обновлении поля. Используется для обновления Binding
@@ -33,15 +36,36 @@ namespace PackingGM.Model
         /// Метод вызывающий ивент PropertyChanged
         /// </summary>
         /// <param name="propertyName">Имя измененного поля. Лучше НЕ передавать</param>
-        protected virtual void OnPropertyChanged(string propertyName = null)
+        protected internal virtual void OnPropertyChanged(string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public static event EventHandler<PropertyChangedEventArgs> StaticPropertyChanged;
+
+        protected static void OnStaticPropertyChanged(string propertyName)
+        {
+            StaticPropertyChanged?.Invoke(null, new PropertyChangedEventArgs(propertyName));
         }
 
         protected virtual string NormalizeText(string text)
         {
             var replacementMap = new Dictionary<char, char>
             {
+                //{ 'А', 'A' },  // Русская 'А' -> английская 'A'
+                //{ 'В', 'B' },  // Русская 'В' -> английская 'B'
+                //{ 'Е', 'E' },  // Русская 'Е' -> английская 'E'
+                //{ 'З', '3' },  // Русская 'З' -> Цифра '3'
+                //{ 'К', 'K' },  // Русская 'К' -> английская 'K'
+                //{ 'М', 'M' },  // Русская 'М' -> английская 'M'
+                //{ 'Н', 'H' },  // Русская 'Н' -> английская 'H'
+                //{ 'О', '0' },  // Русская 'О' -> цифра '0'
+                //{ 'O', '0' },  // Английская 'O' -> цифра '0'
+                //{ 'Р', 'P' },  // Русская 'Р' -> английская 'P'
+                //{ 'С', 'C' },  // Русская 'С' -> английская 'C'
+                //{ 'Т', 'T' },  // Русская 'Т' -> английская 'T'
+                //{ 'У', 'Y' },  // Русская 'У' -> английская 'Y'
+                //{ 'а', 'a' },  // Русская 'а' -> английская 'a'
                 { 'а', 'a' },  // Русская 'а' -> английская 'a'
                 { 'е', 'e' },  // Русская 'е' -> английская 'e'
                 { 'о', '0' },  // Русская 'о' -> Цифра '0'
@@ -57,7 +81,7 @@ namespace PackingGM.Model
                 { 'к', 'k' },   // Русская 'к' -> английская 'k'
                 { 'з', '3' }   // Русская 'з' -> цифра '3'
             };
-            return new string(text.Select(c => replacementMap.ContainsKey(c) ? replacementMap[c] : c).ToArray());
+            return new string(text.Trim(' ').ToLower().Select(c => replacementMap.ContainsKey(c) ? replacementMap[c] : c).ToArray());
         }
     }
 }

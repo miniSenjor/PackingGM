@@ -30,6 +30,7 @@ namespace PackingGM.Model
                 OnPropertyChanged(nameof(Name));
             }
         }
-        public ICollection<DrawingName> DrawingNames { get; set; }
+        public ICollection<D3> D3s { get; set; }
+        public ICollection<Aggregate> Aggregates { get; set; }
     }
 }

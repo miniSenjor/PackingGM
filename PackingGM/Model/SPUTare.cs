@@ -40,7 +40,7 @@ namespace PackingGM.Model
                 OnPropertyChanged(nameof(TareId));
             }
         }
-        private int _countNeed;
+        private int _countNeed = 0;
         public int CountNeed
         {
             get => _countNeed;
@@ -52,6 +52,6 @@ namespace PackingGM.Model
         }
         public SPUVersion SPUVersion { get; set; }
         public Tare Tare { get; set; }
-        public ICollection<GM> GMs { get; set; }
+        public ICollection<GMTare> GMTares { get; set; }
     }
 }

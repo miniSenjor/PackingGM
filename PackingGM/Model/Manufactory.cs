@@ -40,6 +40,6 @@ namespace PackingGM.Model
             }
         }
         public ICollection<User> Users { get; set; }
-        public ICollection<ManufactoryGM> ManufactoryGMs { get; set; }
+        public ICollection<GM> GMs { get; set; }
     }
 }

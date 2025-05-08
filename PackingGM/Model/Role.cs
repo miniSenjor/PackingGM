@@ -37,7 +37,6 @@ namespace PackingGM.Model
             }
         }
         private int _id;
-        [Key]
         public int Id
         {
             get => _id;
@@ -101,7 +100,6 @@ namespace PackingGM.Model
                 //SetField(ref _isAlowedAdmining, value);
             }
         }
-        [ConcurrencyCheck]
         public int Version { get; set; }
         //[Timestamp]
         //public byte[] RowVersion { get; set; }
