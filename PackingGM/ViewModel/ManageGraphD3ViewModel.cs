@@ -3,8 +3,10 @@ using PackingGM.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
+using System.Windows;
 
 namespace PackingGM.ViewModel
 {
@@ -13,14 +15,7 @@ namespace PackingGM.ViewModel
         public ManageGraphD3ViewModel()
         {
             _context = App.GetContext();
-           lGMs = new ObservableCollection<GM>( _context.GMs
-                .Include("OrderAggregate.Order.Contragent")
-                .Include("OrderAggregate.Aggregate.AggregateType")
-                .Include("GMNumber.D3Version.D3")
-                .Include("GMNumber.SPU")
-                .ToList());
-            listGMs = new ObservableCollection<RecordGMTest>(
-                lGMs.Select(g => new RecordGMTest(g)));
+            LoadListGM(null);
 
 
             //RecordGM._aggregateTypes = new ObservableCollection<AggregateType>(_context.AggregateTypes);
@@ -94,6 +89,7 @@ namespace PackingGM.ViewModel
             RecordGMTest recordGMTest = new RecordGMTest();
             listGMs.Add(recordGMTest);
             ListAdd.Add(recordGMTest);
+            SelectedGM = recordGMTest;
         }
 
         private RelayCommand _deleteGMCommand;
@@ -137,9 +133,13 @@ namespace PackingGM.ViewModel
         }
         private void Save(object obj)
         {
-            //из-за тригера не хочет сохранять данные
             try
             {
+                if (!CurrentUser.User.IsAlowedWriting)
+                {
+                    MessageBox.Show("У вас нет прав сохранять измменения");
+                    return;
+                }
                 foreach (var gm in ListAdd.Where(r=>r.OriginalGM!=null))
                 {
                     if (gm != null)
@@ -152,7 +152,8 @@ namespace PackingGM.ViewModel
                 }
                 _context.SaveChanges();
                 LoadListGM(null);
-                StateApp.Instance.ChangeText("Успешно сохранено");
+                StateApp.Instance.ChangeAll("Успешно сохранено", "blue");
+                MessageBox.Show("Успешно сохранено");
             }
             catch(Exception ex)
             {
@@ -172,17 +173,32 @@ namespace PackingGM.ViewModel
         }
         private void LoadListGM(object obj)
         {
+            foreach (var entry in _context.ChangeTracker.Entries().Where(e => e.State != EntityState.Unchanged))
+            {
+                entry.State = EntityState.Detached;
+            }
             lGMs = new ObservableCollection<GM>(_context.GMs
                 .Include("OrderAggregate.Order.Contragent")
                 .Include("OrderAggregate.Aggregate.AggregateType")
                 .Include("GMNumber.D3Version.D3")
                 .Include("GMNumber.SPU")
-                .ToList());
+                .OrderBy(g=>g.Id));
+
             listGMs = new ObservableCollection<RecordGMTest>(
                 lGMs.Select(g => new RecordGMTest(g)));
             ListAdd.Clear();
             ListDelete.Clear();
             OnPropertyChanged(nameof(listGMs));
+        }
+
+        protected override void Back(object obj)
+        {
+            foreach (var entry in _context.ChangeTracker.Entries().Where(e => e.State != EntityState.Unchanged))
+            {
+                entry.State = EntityState.Detached;
+            }
+            listGMs.Clear();
+            base.Back(obj);
         }
 
         private void SelectionChanged()
@@ -248,7 +264,10 @@ namespace PackingGM.ViewModel
                 }
                 else
                     OriginalGM.OrderAggregate.Aggregate.AggregateType = value;
+                UpdateD3s(SelectedAggregate);
                 OnPropertyChanged(nameof(SelectedAggregateType));
+                OnPropertyChanged(nameof(IsSelectedAggregateType));
+                OnPropertyChanged(nameof(IsSelectedD3));
             }
         } 
 
@@ -266,13 +285,15 @@ namespace PackingGM.ViewModel
             get => OriginalGM?.OrderAggregate?.Aggregate;
             set
             {
-                if (SelectedOrder == null)
+                if (SelectedOrder == null || OriginalGM == null || value == null)
                     return;
                 OriginalGM.OrderAggregate = _context.OrderAggregates.First(oa => oa.OrderId == SelectedOrder.Id && oa.AggregateId == value.Id);
                 OnPropertyChanged(nameof(SelectedAggregate));
                 OnPropertyChanged(nameof(SelectedAggregateType));
                 UpdateAggregateTypes(SelectedAggregate);
                 UpdateD3s(SelectedAggregate);
+                OnPropertyChanged(nameof(IsSelectedAggregate));
+                OnPropertyChanged(nameof(IsSelectedAggregateType));
                 return;
                 if(_context.OrderAggregates.Any(oa=>oa.AggregateId == value.Id))
                     if(_context.OrderAggregates.Any(oa => oa.AggregateId == value.Id && oa.OrderId == SelectedOrder.Id))
@@ -291,7 +312,7 @@ namespace PackingGM.ViewModel
         private static ObservableCollection<Order> _orders;
         public ObservableCollection<Order> Orders
         {
-            get => _orders ?? (_orders = new ObservableCollection<Order>(_context.Orders));
+            get => _orders ?? (_orders = new ObservableCollection<Order>(_context.Orders.OrderBy(o=>o.Number)));
             set
             {
                 SetField(ref _orders, value, nameof(Orders));
@@ -306,12 +327,15 @@ namespace PackingGM.ViewModel
 
 
                 OriginalGM.OrderAggregate = _context.OrderAggregates.First(oa => oa.OrderId == value.Id);
+                UpdateAggregates(SelectedOrder);
                 OnPropertyChanged(nameof(SelectedOrder));
                 OnPropertyChanged(nameof(SelectedAggregate));
                 OnPropertyChanged(nameof(SelectedAggregateType));
                 OnPropertyChanged(nameof(SelectedContragent));
-                UpdateAggregates(SelectedOrder);
+                UpdateAggregateTypes(SelectedAggregate);
                 UpdateContragents(SelectedOrder);
+                UpdateD3s(SelectedAggregate);
+                UpdateAllVisibility();
                 return;
                 if (_context.OrderAggregates.Any(oa => oa.OrderId == value.Id))
                     if (_context.OrderAggregates.Any(oa => oa.OrderId == value.Id && oa.AggregateId == SelectedAggregate.Id))
@@ -343,10 +367,13 @@ namespace PackingGM.ViewModel
                 if (SelectedAggregate == null)
                     return;
                 UpdateGMNumber(value);
+                UpdateManufactories(SelectedGMNumber);
                 if(SelectedAggregateType!=null && OriginalGM.GMNumber!=null)
                     OriginalGM.GMNumber.D3Version.D3.AggregateType = SelectedAggregateType;
                 OnPropertyChanged(nameof(SelectedD3));
-                OnPropertyChanged(nameof(SelectedGMNumber));
+                OnPropertyChanged(nameof(IsSelectedD3));
+                OnPropertyChanged(nameof(IsSelectedGM));
+                OnPropertyChanged(nameof(IsSelectedManufactory));
             }
         }
 
@@ -357,6 +384,7 @@ namespace PackingGM.ViewModel
             {
                 OriginalGM.PR = value;
                 OnPropertyChanged(nameof(PR));
+                OnPropertyChanged(nameof(SelectedD3));
             }
         }
 
@@ -378,8 +406,11 @@ namespace PackingGM.ViewModel
                     return;
                 OriginalGM.GMNumber = value;
                 OriginalGM.GMNumber.SPU = _context.SPUs.First(s => s.Id == SelectedGMNumber.SPUId);
+                UpdateManufactories(value);
                 OnPropertyChanged(nameof(SelectedGMNumber));
                 OnPropertyChanged(nameof(SelectedSPU));
+                OnPropertyChanged(nameof(IsSelectedGM));
+                OnPropertyChanged(nameof(IsSelectedManufactory));
             }
         }
 
@@ -391,7 +422,7 @@ namespace PackingGM.ViewModel
         private static ObservableCollection<Manufactory> _manufactories;
         public ObservableCollection<Manufactory> Manufactories
         {
-            get => _manufactories ?? (_manufactories = new ObservableCollection<Manufactory>(_context.Manufactories));
+            get => _manufactories;
             set
             {
                 SetField(ref _manufactories, value, nameof(Manufactories));
@@ -406,16 +437,23 @@ namespace PackingGM.ViewModel
                     return;
                 OriginalGM.Manufactory = value;
                 OnPropertyChanged(nameof(SelectedManufactory));
+                OnPropertyChanged(nameof(IsSelectedManufactory));
             }
         }
 
-        public string PlannedDeadline
+        public DateTime? PlannedDeadline
         {
-            get => OriginalGM.PlannedDeadline.ToString();
+            get => OriginalGM?.PlannedDeadline;
+            set
+            {
+                OriginalGM.PlannedDeadline = value;
+                OnPropertyChanged(nameof(PlannedDeadline));
+                OnPropertyChanged(nameof(PlannedDeadlineWeek));
+            }
         }
         public int PlannedDeadlineWeek
         {
-            get => OriginalGM.PlannedDeadline.DayOfYear / 7;
+            get => OriginalGM.PlannedDeadlineWeek;
         }
 
         public int? Waybill
@@ -427,9 +465,15 @@ namespace PackingGM.ViewModel
                 OnPropertyChanged(nameof(Waybill));
             }
         }
-        public string WaybillDate
+        public DateTime? WaybillDate
         {
-            get => OriginalGM.WaybillDate.ToString();
+            get => OriginalGM?.WaybillDate;
+            set
+            {
+                OriginalGM.WaybillDate = value;
+                OnPropertyChanged(nameof(WaybillDate));
+                OnPropertyChanged(nameof(FactWeek));
+            }
         }
         public int FactWeek
         {
@@ -469,6 +513,7 @@ namespace PackingGM.ViewModel
                 else
                     OriginalGM.OrderAggregate.Order.Contragent = value;
                 OnPropertyChanged(nameof(SelectedContragent));
+                OnPropertyChanged(nameof(IsSelectedContragent));
             }
         }
 
@@ -479,6 +524,7 @@ namespace PackingGM.ViewModel
             UpdateAggregateTypes(SelectedAggregate);
             UpdateD3s(SelectedAggregate);
             UpdateGMNumber(SelectedD3);
+            UpdateManufactories(SelectedGMNumber);
         }
 
         private void UpdateAggregateTypes(Aggregate aggregate)
@@ -486,7 +532,7 @@ namespace PackingGM.ViewModel
             if(aggregate == null)
                 AggregateTypes = new ObservableCollection<AggregateType>();
             else
-                AggregateTypes = new ObservableCollection<AggregateType>(_context.AggregateTypes);
+                AggregateTypes = new ObservableCollection<AggregateType>(_context.AggregateTypes.OrderBy(at=>at.Name));
         }
 
         private void UpdateAggregates(Order order)
@@ -505,7 +551,7 @@ namespace PackingGM.ViewModel
             if (order == null)
                 Contragents = null;
             else
-                Contragents = new ObservableCollection<Contragent>(_context.Contragents);
+                Contragents = new ObservableCollection<Contragent>(_context.Contragents.OrderBy(c=>c.Name));
         }
 
         private void UpdateD3s(Aggregate aggregate)
@@ -520,7 +566,10 @@ namespace PackingGM.ViewModel
             if (aggregate == null)
                 D3s = null;
             else
-                D3s = new ObservableCollection<D3>(_context.D3s);
+                D3s = new ObservableCollection<D3>(_context.D3s
+                    .Include("D3Versions.GMNumbers")
+                    .Where(d=>d.D3Versions.Any(version=>version.State==1 && version.GMNumbers.Count>0))
+                    .OrderBy(d=>d.Note));
         }
 
         private void UpdateGMNumber(D3 d3)
@@ -533,7 +582,9 @@ namespace PackingGM.ViewModel
                     D3Version d3Version = _context.D3Versions.First(d3v => d3v.D3Id == d3.Id && d3v.State == 1);
                     if(SelectedGMNumber==null || SelectedGMNumber.D3VersionId != d3Version.Id)
                         OriginalGM.GMNumber = _context.GMNumbers.First(gn => gn.D3VersionId == d3Version.Id);
-                    GMNumbers = new ObservableCollection<GMNumber>(_context.GMNumbers.Where(gn => gn.D3VersionId == d3Version.Id));
+                    GMNumbers = new ObservableCollection<GMNumber>(_context.GMNumbers
+                        .Where(gn => gn.D3VersionId == d3Version.Id)
+                        .OrderBy(gm=>gm.NumberGM));
                     StateApp.Instance.ChangeText("Готово");
                     OriginalGM.GMNumber.SPU = _context.SPUs.First(s => s.Id == SelectedGMNumber.SPUId);
                 }
@@ -548,7 +599,89 @@ namespace PackingGM.ViewModel
                 }
         }
 
+        private void UpdateManufactories(GMNumber gmNumber)
+        {
+            if (gmNumber == null)
+                Manufactories = null;
+            else
+                Manufactories = new ObservableCollection<Manufactory>(_context.Manufactories);
+        }
+
+
+        private void UpdateAllVisibility()
+        {
+            OnPropertyChanged(nameof(IsSelectedOrder));
+            OnPropertyChanged(nameof(IsSelectedAggregate));
+            OnPropertyChanged(nameof(IsSelectedAggregateType));
+            OnPropertyChanged(nameof(IsSelectedD3));
+            OnPropertyChanged(nameof(IsSelectedGM));
+            OnPropertyChanged(nameof(IsSelectedManufactory));
+            OnPropertyChanged(nameof(IsSelectedContragent));
+        }
+        private static bool _globalVisibility { get; set; } = true;
+        public Visibility IsSelectedOrder
+        {
+            get
+            {
+                if (_globalVisibility && SelectedOrder==null) return Visibility.Visible;
+                else return Visibility.Collapsed;
+            }
+        }
         
+        public Visibility IsSelectedAggregate
+        {
+            get
+            {
+                if (_globalVisibility && SelectedOrder!=null && SelectedAggregate==null) return Visibility.Visible;
+                else return Visibility.Collapsed;
+            }
+        }
+        
+        public Visibility IsSelectedAggregateType
+        {
+            get
+            {
+                if (_globalVisibility && SelectedOrder != null && SelectedAggregate != null && SelectedAggregateType==null) return Visibility.Visible;
+                else return Visibility.Collapsed;
+            }
+        }
+
+        
+        public Visibility IsSelectedD3
+        {
+            get
+            {
+                if (_globalVisibility && SelectedOrder != null && SelectedAggregate != null && SelectedAggregateType != null && SelectedD3 == null) return Visibility.Visible;
+                else return Visibility.Collapsed;
+            }
+        }
+        
+        public Visibility IsSelectedGM
+        {
+            get
+            {
+                if (_globalVisibility && SelectedOrder != null && SelectedAggregate != null && SelectedAggregateType != null && SelectedD3 != null && SelectedGMNumber == null) return Visibility.Visible;
+                else return Visibility.Collapsed;
+            }
+        }
+        
+        public Visibility IsSelectedManufactory
+        {
+            get
+            {
+                if (_globalVisibility && SelectedOrder != null && SelectedAggregate != null && SelectedAggregateType != null && SelectedD3 != null && SelectedGMNumber != null && SelectedManufactory==null) return Visibility.Visible;
+                else return Visibility.Collapsed;
+            }
+        }
+
+        public Visibility IsSelectedContragent
+        {
+            get
+            {
+                if (_globalVisibility && SelectedOrder != null && SelectedContragent == null) return Visibility.Visible;
+                else return Visibility.Collapsed;
+            }
+        }
     }
 
     public class RecordGM : BaseModel

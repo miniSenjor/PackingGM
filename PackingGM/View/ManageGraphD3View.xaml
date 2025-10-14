@@ -27,7 +27,7 @@
         <ListView ItemsSource="{Binding listGMs}"
                   SelectedItem="{Binding SelectedGM}"
                   IsSynchronizedWithCurrentItem="True"
-                  Grid.Row="1">
+                  Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Width="40">
@@ -48,93 +48,77 @@
                         </GridViewColumn.Header>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <StackPanel>
-                                    <ComboBox ItemsSource="{Binding AggregateTypes}"
-                                              SelectedItem="{Binding SelectedAggregateType}"
-                                              DisplayMemberPath="Name"
-                                              Width="Auto"
-                                              MinWidth="50"
-                                              IsEditable="True"/>
+                                <StackPanel Orientation="Horizontal">
                                     <local1:ComboTextBox ItemsSource="{Binding AggregateTypes}"
                                                          SelectedItem="{Binding SelectedAggregateType}"
                                                          DisplayMemberPath="Name"
-                                                         MinWidth="50"
-                                                         Visibility="Collapsed"/>
+                                                         MinWidth="50"/>
+                                    <Grid Background="Red"
+                                          Width="3"
+                                          Visibility="{Binding IsSelectedAggregateType}"/>
                                 </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
                     <!-- Колонка для Aggregate -->
-                    <GridViewColumn Width="135">
+                    <GridViewColumn Width="145">
                         <GridViewColumn.Header>
                             <TextBlock Text="№ агрегата" TextWrapping="Wrap" MaxHeight="50"/>
                         </GridViewColumn.Header>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <StackPanel>
-                                    <ComboBox ItemsSource="{Binding Aggregates}"
-                                              SelectedItem="{Binding SelectedAggregate}"
-                                              DisplayMemberPath="Number"
-                                              Width="Auto"
-                                              MinWidth="60"
-                                              IsEditable="True"/>
+                                <StackPanel Orientation="Horizontal">
                                     <local1:ComboTextBox ItemsSource="{Binding Aggregates}"
                                                          SelectedItem="{Binding SelectedAggregate}"
                                                          DisplayMemberPath="Number"
                                                          Width="Auto"
-                                                         MinWidth="60"
-                                                         Visibility="Collapsed"/>
+                                                         MinWidth="60"/>
+                                    <Grid Background="Red"
+                                          Width="3"
+                                          Visibility="{Binding IsSelectedAggregate}"/>
                                 </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                
+
                     <!-- Колонка для Order -->
-                    <GridViewColumn Width="90">
+                    <GridViewColumn Width="93">
                         <GridViewColumn.Header>
                             <TextBlock Text="№ заказа" TextWrapping="Wrap" MaxHeight="50"/>
                         </GridViewColumn.Header>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <StackPanel>
-                                    <ComboBox ItemsSource="{Binding Orders}"
-                                              SelectedItem="{Binding SelectedOrder}"
-                                              DisplayMemberPath="Number"
-                                              Width="Auto"
-                                              MinWidth="50"
-                                              IsEditable="True"/>
+                                <StackPanel Orientation="Horizontal">
                                     <local1:ComboTextBox ItemsSource="{Binding Orders}"
                                                          SelectedItem="{Binding SelectedOrder}"
                                                          DisplayMemberPath="Number"
                                                          Width="Auto"
-                                                         MinWidth="50"
-                                                         Visibility="Collapsed"/>
+                                                         MinWidth="50"/>
+                                    <Grid Background="Red"
+                                          Width="3"
+                                          Visibility="{Binding IsSelectedOrder}"/>
                                 </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
                     <!-- Колонка для D3 -->
-                    <GridViewColumn Width="150">
+                    <GridViewColumn Width="163">
                         <GridViewColumn.Header>
                             <TextBlock Text="Д3" TextWrapping="Wrap" MaxHeight="50"/>
                         </GridViewColumn.Header>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <StackPanel>
-                                    <ComboBox ItemsSource="{Binding D3s}"
-                                              SelectedItem="{Binding SelectedD3}"
-                                              DisplayMemberPath="Note"
-                                              Width="Auto"
-                                              MinWidth="60"
-                                              IsEditable="True"/>
+                                <StackPanel Orientation="Horizontal">
                                     <local1:ComboTextBox ItemsSource="{Binding D3s}"
                                                          SelectedItem="{Binding SelectedD3}"
                                                          DisplayMemberPath="Note"
                                                          Width="Auto"
-                                                         MinWidth="50"
-                                                         Visibility="Collapsed"/>
+                                                         MinWidth="50"/>
+                                    <Grid Background="Red"
+                                          Width="3"
+                                          Visibility="{Binding IsSelectedD3}"/>
                                 </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
@@ -151,7 +135,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                
+
                     <!-- Колонка для GM -->
                     <GridViewColumn Width="60">
                         <GridViewColumn.Header>
@@ -159,18 +143,15 @@
                         </GridViewColumn.Header>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <StackPanel>
-                                    <ComboBox ItemsSource="{Binding GMNumbers}"
-                                              SelectedItem="{Binding SelectedGMNumber}"
-                                              DisplayMemberPath="NumberGM"
-                                              Width="Auto"
-                                              IsEditable="True"/>
+                                <StackPanel Orientation="Horizontal">
                                     <local1:ComboTextBox ItemsSource="{Binding GMNumbers}"
                                                          SelectedItem="{Binding SelectedGMNumber}"
                                                          DisplayMemberPath="NumberGM"
-                                                         MinWidth="50"
-                                                         Visibility="Collapsed"/>
-                                    
+                                                         MinWidth="35"/>
+                                    <Grid Background="Red"
+                                          Width="3"
+                                          Visibility="{Binding IsSelectedGM}"/>
+
                                 </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
@@ -184,11 +165,11 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel>
-                                    <TextBox Text="{Binding SelectedSPU.Note, Mode=OneWay}"
-                                             Width="Auto"
-                                             MinWidth="100"
-                                             TextWrapping="Wrap"/>
-                                    
+                                    <TextBlock Text="{Binding SelectedSPU.Note}"
+                                               Width="Auto"
+                                               MaxHeight="50"
+                                               TextWrapping="Wrap"/>
+
                                 </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
@@ -200,7 +181,9 @@
                         </GridViewColumn.Header>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Text="{Binding SelectedSPU.Name, Mode=OneWay}" MinWidth="100" TextWrapping="Wrap"/>
+                                <TextBlock Text="{Binding SelectedSPU.Name}"
+                                           MaxHeight="50"
+                                           TextWrapping="Wrap"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -212,30 +195,32 @@
                         </GridViewColumn.Header>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <StackPanel>
-                                    <ComboBox ItemsSource="{Binding Manufactories}"
-                                              SelectedItem="{Binding SelectedManufactory}"
-                                              DisplayMemberPath="Number"
-                                              MinWidth="40"
-                                              IsEditable="True"/>
+                                <StackPanel Orientation="Horizontal">
                                     <local1:ComboTextBox ItemsSource="{Binding Manufactories}"
-                                                         SelectedItem="{Binding SelectedManufactory, Mode=OneWay}"
+                                                         SelectedItem="{Binding SelectedManufactory}"
                                                          DisplayMemberPath="Number"
-                                                         Width="Auto"
-                                                         Visibility="Collapsed"/>
+                                                         Width="Auto"/>
+                                    <Grid Background="Red"
+                                          Width="3"
+                                          Visibility="{Binding IsSelectedManufactory}"/>
                                 </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
                     <!-- Колонка для PlannedDeadline-->
-                    <GridViewColumn Width="95">
+                    <GridViewColumn Width="105">
                         <GridViewColumn.Header>
                             <TextBlock Text="Плановый срок сдачи ГМ" TextWrapping="Wrap" MaxHeight="50"/>
                         </GridViewColumn.Header>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Text="{Binding PlannedDeadline, Mode=OneWay}" MinWidth="60"/>
+                                <StackPanel>
+                                    <TextBox Text="{Binding PlannedDeadline, Mode=OneWay}" Visibility="Collapsed"/>
+                                    <DatePicker SelectedDate="{Binding PlannedDeadline}"
+                                                DisplayDateStart="01/01/2025"
+                                                DisplayDateEnd="01/01/2050"/>
+                                </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -246,7 +231,7 @@
                         </GridViewColumn.Header>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Text="{Binding PlannedDeadlineWeek, Mode=OneWay}" MinWidth="40"/>
+                                <TextBlock Text="{Binding PlannedDeadlineWeek}" MinWidth="40"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -264,13 +249,18 @@
                     </GridViewColumn>
 
                     <!-- Колонка для NackadnaiaDate-->
-                    <GridViewColumn Width="70">
+                    <GridViewColumn Width="105">
                         <GridViewColumn.Header>
                             <TextBlock Text="Дата накладной" TextWrapping="Wrap" MaxHeight="50"/>
                         </GridViewColumn.Header>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Text="{Binding WaybillDate, Mode=OneWay}" />
+                                <StackPanel>
+                                    <TextBox Text="{Binding WaybillDate, Mode=OneWay}" Visibility="Collapsed"/>
+                                    <DatePicker SelectedDate="{Binding WaybillDate}"
+                                                DisplayDateStart="01/01/2025"
+                                                DisplayDateEnd="01/01/2050"/>
+                                </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -282,7 +272,7 @@
                         </GridViewColumn.Header>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Text="{Binding FactWeek, Mode=OneWay}" MinWidth="30"/>
+                                <TextBlock Text="{Binding FactWeek}" MinWidth="30"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -294,7 +284,10 @@
                         </GridViewColumn.Header>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Text="{Binding WhyDelay}" MinWidth="80"/>
+                                <TextBox Text="{Binding WhyDelay}"
+                                         MaxHeight="50"
+                                         TextWrapping="Wrap"
+                                         MinWidth="50"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -306,17 +299,14 @@
                         </GridViewColumn.Header>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <StackPanel>
-                                    <ComboBox ItemsSource="{Binding Contragents}"
-                                              SelectedItem="{Binding SelectedContragent}"
-                                              DisplayMemberPath="Name"
-                                              Width="Auto"
-                                              IsEditable="True"/>
+                                <StackPanel Orientation="Horizontal">
                                     <local1:ComboTextBox ItemsSource="{Binding Contragents}"
-                                                         SelectedItem="{Binding SelectedContragent, Mode=OneWay}"
+                                                         SelectedItem="{Binding SelectedContragent}"
                                                          DisplayMemberPath="Name"
-                                                         Width="Auto"
-                                                         Visibility="Collapsed"/>
+                                                         Width="Auto"/>
+                                    <Grid Background="Red"
+                                          Width="3"
+                                          Visibility="{Binding IsSelectedContragent}"/>
                                 </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>

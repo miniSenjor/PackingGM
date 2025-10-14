@@ -68,7 +68,7 @@
                         </GridViewColumn.Header>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Login}" Style="{DynamicResource TextBlockStyle}"/>
+                                <TextBlock Text="{Binding Login}" Style="{DynamicResource TextBlockStyle}" Background="{DynamicResource GrayBrush}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

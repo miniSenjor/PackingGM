@@ -74,6 +74,11 @@ namespace PackingGM.View.Control
                     txt.Text = prop?.GetValue(newValue, null)?.ToString() ?? "";
                 }
             }
+            if (newValue==null)
+            {
+                txt.Text = "";
+                ItemsPopup.IsOpen = false;
+            }
         }
         public object SelectedItem
         {
@@ -85,7 +90,7 @@ namespace PackingGM.View.Control
                 //var value = prop.GetValue(item, null)?.ToString() ?? "";
                 //Debug.Print(SelectedItemProperty.ToString());
                 //написать выбор поля по displayMemberPath
-                if (!string.IsNullOrEmpty(DisplayMemberPath))
+                if (!string.IsNullOrEmpty(DisplayMemberPath) && SelectedItem!=null)
                 {
                     var property = SelectedItem.GetType().GetProperty(DisplayMemberPath);
                     txt.Text = property?.GetValue(SelectedItem, null)?.ToString() ?? "";
@@ -100,7 +105,9 @@ namespace PackingGM.View.Control
                 typeof(string),
                 typeof(ComboTextBox),
                 new PropertyMetadata(null));
-
+        /// <summary>
+        /// Выводимое свойство
+        /// </summary>
         public string DisplayMemberPath
         {
             get => (string)GetValue(DisplayMemberPathProperty);
@@ -140,23 +147,34 @@ namespace PackingGM.View.Control
 
         private void Txt_PreviewLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
-            if (txt.Text != "" && !lst.Items.Contains(txt.Text))
+            bool con = ItemsSource.Any(i=>
+            {
+                var property = SelectedItem.GetType().GetProperty(DisplayMemberPath);
+                return property != null &&
+                        property.GetValue(i, null)?.ToString() == txt.Text;
+            });
+            if (txt.Text != "" && !con)
             {
                 Debug.Print(txt.Text);
                 foreach(var item in lst.Items)
                 {
                     Debug.Print(item.ToString());
                 }
+                if (!string.IsNullOrEmpty(DisplayMemberPath) && SelectedItem != null)
+                {
+                    var property = SelectedItem.GetType().GetProperty(DisplayMemberPath);
+                    txt.Text = property?.GetValue(SelectedItem, null)?.ToString() ?? "";
+                }
                 //Debug.Print("Фокус не потерян");
                 //e.Handled = true;
             }
-            else
+            else if (txt.Text!="")
             {
-                    return;
+             //       return;
                 //доделать что бы при вводе и снятия фокуса выбирался элемент из списка
                 foreach(var item in lst.ItemsSource)
                 {
-                    //SelectedItem = item;
+                    SelectedItem = item;
                 }
             }
         }
@@ -216,6 +234,16 @@ namespace PackingGM.View.Control
         {
             UpdateSelectedItem(SelectedItem);
             ItemsPopup.IsOpen = false;
+        }
+
+        private void Txt_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                Txt_PreviewLostKeyboardFocus(null, null);
+                ItemsPopup.IsOpen = false;
+                Keyboard.ClearFocus();
+            }
         }
     }
 }

@@ -177,6 +177,9 @@ namespace PackingGM.ViewModel
                         case "manufactory":
                             AddManufactories();
                             break;
+                        case "contragent":
+                            AddContragents();
+                            break;
                         default:
                             StateApp.Instance.ChangeText("Не известное имя таблицы");
                             break;
@@ -640,13 +643,54 @@ namespace PackingGM.ViewModel
 
         private void AddManufactories()
         {
-            _context.Manufactories.Add(new Manufactory { Number = "926"});
-            _context.Manufactories.Add(new Manufactory { Number = "927"});
-            _context.Manufactories.Add(new Manufactory { Number = "928"});
-            _context.Manufactories.Add(new Manufactory { Number = "343"});
-            _context.Manufactories.Add(new Manufactory { Number = "ОЭД"});
-            _context.SaveChanges();
+            string[] numbers = new string[]
+            {
+                "926",
+                "927",
+                "928",
+                "343",
+                "ОЭД"
+            };
+            foreach (string s in numbers)
+                IfNoExistManufactoriesAdd(s);
+        }
+        private void IfNoExistManufactoriesAdd(string number)
+        {
+            if (!_context.Manufactories.Any(c => c.Number == number))
+            {
+                Manufactory manufactory = new Manufactory { Number = number };
+                _context.Manufactories.Add(manufactory);
+                _context.SaveChanges();
+            }
         }
 
+        private void AddContragents()
+        {
+            string[] names = new string[] 
+            {
+                "ГКС Сахалин",
+                "КС Усинская",
+                "КС Воркутинская",
+                "КС Гагарацкая",
+                "КС Дивенская",
+                "КС Бабаевская",
+                "КС Грязовецкая",
+                "НГКМ Чаянда",
+                "КМЧ АЛ-31",
+                "Ковыктинское ГКМ",
+                "Бованенковское НГКМ"
+            };
+            foreach (string s in names)
+                IfNoExistContragentAdd(s);
+        }
+        private void IfNoExistContragentAdd(string name)
+        {
+            if(!_context.Contragents.Any(c=>c.Name==name))
+            {
+                Contragent contragent = new Contragent { Name = name };
+                _context.Contragents.Add(contragent);
+                _context.SaveChanges();
+            }
+        }
     }
 }

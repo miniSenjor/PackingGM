@@ -20,23 +20,33 @@
                     Command="{Binding ExitCommand}"
                     Width="60"
                     Height="40"
+                    Margin="0 0 10 0"
                     DockPanel.Dock="Right"/>
             <TextBlock Text="Меню"
-                       DockPanel.Dock="Left"
                        Style="{DynamicResource TextBlockHeadStyle}"
+                       DockPanel.Dock="Left"
+                       Margin="5 5 0 0"
                        FontSize="25"/>
         </DockPanel>
         <StackPanel Grid.Row="1" Width="250">
             <Button Command="{Binding OpenChangeUserCommand}"
+                    Style="{DynamicResource ButtonNoStyle}"
+                    Margin="0 5"
                     Content="Управление пользователями"
                     Visibility="{Binding IsAlowedAdmining}"/>
             <Button Command="{Binding OpenChangeGraphCommand}"
+                    Style="{DynamicResource ButtonNoStyle}"
+                    Margin="0 5"
                     Content="Управление графиком Тара"
                     Visibility="{Binding IsAlowedViewing}"/>
             <Button Command="{Binding OpenChangeGraphD3Command}"
+                    Style="{DynamicResource ButtonNoStyle}"
+                    Margin="0 5"
                     Content="Управление графиком Д3"
                     Visibility="{Binding IsAlowedViewing}"/>
             <Button Command="{Binding OpenTestCommand}"
+                    Style="{DynamicResource ButtonNoStyle}"
+                    Margin="0 5"
                     Content="Заполнение бд"
                     Visibility="{Binding IsAlowedAdmining}"/>
         </StackPanel>

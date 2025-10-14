@@ -15,7 +15,8 @@
                         Width="12"/>
                 <TextBox TextChanged="TextBox_TextChanged"
                          x:Name="txt"
-                         PreviewLostKeyboardFocus="Txt_PreviewLostKeyboardFocus"/>
+                         KeyDown="Txt_KeyDown"
+                         LostKeyboardFocus="Txt_PreviewLostKeyboardFocus"/>
             </DockPanel>
             <Popup x:Name="ItemsPopup"
                    Placement="Bottom"

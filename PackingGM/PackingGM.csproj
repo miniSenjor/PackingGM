@@ -36,6 +36,9 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>box2.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.0.0\lib\net40\EntityFramework.dll</HintPath>
@@ -54,6 +57,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -144,6 +148,7 @@
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\ChangeUserWindowModel.cs" />
     <Compile Include="ViewModel\EntityUIUpdater.cs" />
+    <Compile Include="ViewModel\HelpWindowModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ManageGraphD3ViewModel.cs" />
@@ -157,11 +162,17 @@
     <Compile Include="View\ChangeUserWindow.xaml.cs">
       <DependentUpon>ChangeUserWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\HelpWindow.xaml.cs">
+      <DependentUpon>HelpWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\ManageGraphD3View.xaml.cs">
       <DependentUpon>ManageGraphD3View.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ManageGraphView.xaml.cs">
       <DependentUpon>ManageGraphView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ManageRequstView.xaml.cs">
+      <DependentUpon>ManageRequstView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ManageRoleView.xaml.cs">
       <DependentUpon>ManageRoleView.xaml</DependentUpon>
@@ -176,6 +187,10 @@
       <DependentUpon>ComboTextBox.xaml</DependentUpon>
     </Compile>
     <Page Include="View\ChangeUserWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\HelpWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -211,6 +226,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ManageGraphView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ManageRequstView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -298,7 +317,14 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Resources\" />
     <Folder Include="TCS\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="box1.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="box2.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

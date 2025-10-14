@@ -23,8 +23,8 @@ namespace PackingGM.Model
             get => _countGet;
             set
             {
-                if (SPUTare != null && value > SPUTare.CountNeed)
-                    throw new ArgumentOutOfRangeException("Нельзя задать количество полученой тары больше требуемой");
+                if (SPUTare != null && (value > SPUTare.CountNeed || value<0))
+                    throw new ArgumentOutOfRangeException("Нельзя задать количество полученой тары больше требуемой или меньше 0");
                 _countGet = value;
                 OnPropertyChanged(nameof(CountGet));
             }

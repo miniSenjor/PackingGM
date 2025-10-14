@@ -70,12 +70,12 @@ namespace PackingGM.Model
             get => _pr;
             set => SetField(ref _pr, value, nameof(PR));
         }
-        private DateTime _plannedDeadline;
+        private DateTime? _plannedDeadline;
         /// <summary>
         /// Плановый срок сдачи ГМ
         /// Д3 Тара
         /// </summary>
-        public DateTime PlannedDeadline
+        public DateTime? PlannedDeadline
         {
             get => _plannedDeadline;
             set
@@ -85,16 +85,34 @@ namespace PackingGM.Model
             }
         }
         /// <summary>
+        /// Плановый срок сдачи ГМ (неделя)
+        /// Д3
+        /// </summary>
+        public int PlannedDeadlineWeek
+        {
+            get
+            {
+                if (PlannedDeadline == null)
+                    return 0;
+                else
+                {
+                    int year = PlannedDeadline.HasValue ? PlannedDeadline.Value.Year : 0;
+                    int days = PlannedDeadline.HasValue ? PlannedDeadline.Value.DayOfYear : 0;
+                    return (days + (int)(new DateTime(year, 1, 1).DayOfWeek) - 2) / 7 + 1;
+                }
+            }
+        }
+        /// <summary>
         /// Необходимый срок обеспечения
         /// Тара
         /// </summary>
-        public DateTime NecessaryProvisionPeriod
+        public DateTime? NecessaryProvisionPeriod
         {
             get
             {
                 try
                 {
-                    return PlannedDeadline.AddDays(-14);
+                    return PlannedDeadline?.AddDays(-14);
                 }
                 catch
                 {
@@ -115,12 +133,12 @@ namespace PackingGM.Model
                 SetField(ref _waybill, value, nameof(Waybill));
             }
         }
-        private DateTime _waybillDate;
+        private DateTime? _waybillDate;
         /// <summary>
         /// Дата накладной
         /// Д3 Тара
         /// </summary>
-        public DateTime WaybillDate
+        public DateTime? WaybillDate
         {
             get => _waybillDate;
             set
@@ -133,7 +151,17 @@ namespace PackingGM.Model
         /// </summary>
         public int FactWeek
         {
-            get => WaybillDate.DayOfYear / 7;
+            get
+            {
+                if (WaybillDate == null)
+                    return 0;
+                else
+                {
+                    int year = WaybillDate.HasValue ? WaybillDate.Value.Year : 0;
+                    int days = WaybillDate.HasValue ? WaybillDate.Value.DayOfYear : 0;
+                    return (days + (int)(new DateTime(year, 1, 1).DayOfWeek) - 2) / 7 + 1;
+                }
+            }
         }
         private string _whyDelay;
         /// <summary>

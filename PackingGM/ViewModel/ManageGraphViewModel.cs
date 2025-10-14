@@ -3,8 +3,10 @@ using PackingGM.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
+using System.Windows;
 
 namespace PackingGM.ViewModel
 {
@@ -13,11 +15,12 @@ namespace PackingGM.ViewModel
         public ManageGraphViewModel()
         {
             _context = App.GetContext();
-            LoadGM();
+            LoadListGM();
         }
         private AppDb _context;
         private ObservableCollection<GMTare> lGMs { get; set; }
         public ObservableCollection<Record> ListGMs { get; set; }
+        private List<Record> ListDelete { get; set; } = new List<Record>();
         private Record _selectedGMTare;
         public Record SelectedGMTare
         {
@@ -27,18 +30,6 @@ namespace PackingGM.ViewModel
                 SetField(ref _selectedGMTare, value, nameof(SelectedGMTare));
                 SelectionChanged();
             }
-        }
-        private void LoadGM()
-        {
-            lGMs = new ObservableCollection<GMTare>(_context.GMTares
-                .Include("GM.OrderAggregate.Order.Contragent")
-                .Include("GM.OrderAggregate.Aggregate.AggregateType")
-                .Include("GM.GMNumber.SPU")
-                .Include("SPUTare.Tare")
-                .Include("GM.Manufactory")
-                .Where(g => g.GM.GMNumber != null));
-            ListGMs = new ObservableCollection<Record>(
-                lGMs.Select(g => new Record(g)));
         }
         private void SelectionChanged()
         {
@@ -54,8 +45,36 @@ namespace PackingGM.ViewModel
 
         protected override void Back(object obj)
         {
-            Navigation.Navigate(PageType.MainView);
-            ListGMs = null;
+            foreach (var entry in _context.ChangeTracker.Entries().Where(e => e.State != EntityState.Unchanged))
+            {
+                entry.State = EntityState.Detached;
+            }
+            ListGMs.Clear();
+            base.Back(obj);
+        }
+
+        private RelayCommand _deleteGMCommand;
+        public virtual RelayCommand DeleteGMCommand
+        {
+            get
+            {
+                if (_deleteGMCommand == null)
+                    _deleteGMCommand = new RelayCommand(DeleteGM);
+                return _deleteGMCommand;
+            }
+        }
+        private void DeleteGM(object obj)
+        {
+            try
+            {
+
+                ListDelete.Add(SelectedGMTare);
+                ListGMs.Remove(SelectedGMTare);
+            }
+            catch (Exception ex)
+            {
+                Debug.Print(ex.ToString());
+            }
         }
 
         private RelayCommand _saveCommand;
@@ -70,7 +89,55 @@ namespace PackingGM.ViewModel
         }
         private void Save(object obj)
         {
-            _context.SaveChanges();
+            try
+            {
+                if (!CurrentUser.User.IsAlowedWriting)
+                {
+                    MessageBox.Show("У вас нет прав сохранять измменения");
+                    return;
+                }
+                foreach (GMTare gm in ListDelete.Select(g => g.OriginalGM))
+                {
+                    if (gm != null)
+                        _context.GMTares.Remove(gm);
+                }
+                _context.SaveChanges();
+                LoadListGM(null);
+                StateApp.Instance.ChangeText("Успешно сохранено");
+            }
+            catch (Exception ex)
+            {
+                StateApp.Instance.ChangeAll(ex.ToString(), "red");
+            }
+        }
+
+        private RelayCommand _loadListGMCommand;
+        public RelayCommand LoadListGMCommand
+        {
+            get
+            {
+                if (_loadListGMCommand == null)
+                    _loadListGMCommand = new RelayCommand(LoadListGM);
+                return _loadListGMCommand;
+            }
+        }
+        private void LoadListGM(object obj = null)
+        {
+            foreach (var entry in _context.ChangeTracker.Entries().Where(e => e.State != EntityState.Unchanged))
+            {
+                entry.State = EntityState.Detached;
+            }
+            lGMs = new ObservableCollection<GMTare>(_context.GMTares
+                .Include("GM.OrderAggregate.Order.Contragent")
+                .Include("GM.OrderAggregate.Aggregate.AggregateType")
+                .Include("GM.GMNumber.SPU")
+                .Include("SPUTare.Tare")
+                .Include("GM.Manufactory")
+                .Where(g => g.GM.GMNumber != null));
+            ListGMs = new ObservableCollection<Record>(
+                lGMs.Select(g => new Record(g)));
+            ListDelete.Clear();
+            OnPropertyChanged(nameof(ListGMs));
         }
     }
     
@@ -134,7 +201,7 @@ namespace PackingGM.ViewModel
             get => OriginalGM?.GM?.OrderAggregate?.Order?.Contragent;
             set
             {
-
+                //
             }
         }
 
@@ -220,8 +287,19 @@ namespace PackingGM.ViewModel
             get => OriginalGM?.CountGet;
             set
             {
-                OriginalGM.CountGet = (int)value;
-                OnPropertyChanged(nameof(CountGet));
+                try
+                {
+                    OriginalGM.CountGet = (int)value;
+                }
+                catch(ArgumentOutOfRangeException)
+                {
+                    OriginalGM.CountGet = (int)CountNeed;
+                }
+                finally
+                {
+                    OnPropertyChanged(nameof(CountGet));
+                    OnPropertyChanged(nameof(Deficit));
+                }
             }
         }
 
@@ -240,14 +318,24 @@ namespace PackingGM.ViewModel
             }
         }
 
-        public string DemindDate
+        public DateTime? DemindDate
         {
-            get => OriginalGM?.DemindDate.ToString();
+            get => OriginalGM?.DemindDate;
+            set
+            {
+                OriginalGM.DemindDate = value;
+                OnPropertyChanged(nameof(DemindDate));
+            }
         }
 
-        public string PlannedDeadline
+        public DateTime? PlannedDeadline
         {
-            get => OriginalGM?.GM?.PlannedDeadline.ToString();
+            get => OriginalGM?.GM?.PlannedDeadline;
+            set
+            {
+                OriginalGM.GM.PlannedDeadline = value;
+                OnPropertyChanged(nameof(PlannedDeadline));
+            }
         }
 
         public string NecessaryProvisionPeriod
@@ -255,9 +343,14 @@ namespace PackingGM.ViewModel
             get => OriginalGM?.GM?.NecessaryProvisionPeriod.ToString();
         }
 
-        public string PromisedProvisionPeriod
+        public DateTime? PromisedProvisionPeriod
         {
-            get => OriginalGM?.PromisedProvisionPeriod.ToString();
+            get => OriginalGM?.PromisedProvisionPeriod;
+            set
+            {
+                OriginalGM.PromisedProvisionPeriod = value;
+                OnPropertyChanged(nameof(PromisedProvisionPeriod));
+            }
         }
 
         public string Comment
@@ -280,9 +373,14 @@ namespace PackingGM.ViewModel
             }
         }
 
-        public string WaybillDate
+        public DateTime? WaybillDate
         {
-            get => OriginalGM?.GM?.WaybillDate.ToString();
+            get => OriginalGM?.GM?.WaybillDate;
+            set
+            {
+                OriginalGM.GM.WaybillDate = value;
+                OnPropertyChanged(nameof(WaybillDate));
+            }
         }
 
         public string ServiceNote
@@ -314,6 +412,9 @@ namespace PackingGM.ViewModel
         public void UpdateSource()
         {
             UpdateAggregates(SelectedOrder);
+            UpdateManufactories(SelectedOrder);
+            UpdateGMNumbers(SelectedOrder);
+            UpdateTares(SelectedGMNumber);
         }
 
         private void UpdateAggregates(Order order)
@@ -325,6 +426,48 @@ namespace PackingGM.ViewModel
                     _context.OrderAggregates
                     .Where(oa => oa.OrderId == order.Id)
                     .Select(oa => oa.Aggregate));
+        }
+        private void UpdateGMNumbers(Order order)
+        {
+            if (order == null)
+                GMNumbers = null;
+            else
+                GMNumbers = new ObservableCollection<GMNumber>(
+                    _context.GMNumbers
+                    .Where(gn => gn.SPUId == SelectedSPU.Id));
+            Aggregates = new ObservableCollection<Aggregate>(
+                _context.OrderAggregates
+                .Where(oa => oa.OrderId == order.Id)
+                .Select(oa => oa.Aggregate));
+        }
+        private void UpdateManufactories(Order order)
+        {
+            if (order == null)
+                Manufactories = null;
+            else
+                Manufactories = new ObservableCollection<Manufactory>(
+                _context.Manufactories);
+        }
+        private void UpdateTares(GMNumber gmNumber)
+        {
+            if (gmNumber == null)
+                Tares = null;
+            else
+                try
+                {
+                    SPUVersion spuVersion = _context.SPUVersions.First(sv => sv.SPUId == gmNumber.SPUId);
+                    Tares = new ObservableCollection<Tare>(
+                        _context.SPUTares
+                        .Where(st => st.SPUVersionId == spuVersion.Id)
+                        .Select(st => st.Tare));
+                }
+                catch
+                {
+                    StateApp.Instance.ChangeText("У этой спецификации нет активной версии");
+                }
+                finally
+                {
+                }
         }
 
     }

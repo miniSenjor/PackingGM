@@ -34,7 +34,7 @@ namespace PackingGM.Model
                         visibility = User.IsAlowedWriting;
                         break;
                     case "IsAlowedViewing":
-                        visibility = User.IsAlowedWriting;
+                        visibility = User.IsAlowedViewing;
                         break;
                 }
             }
