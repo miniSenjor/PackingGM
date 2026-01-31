@@ -326,5 +326,23 @@
   <ItemGroup>
     <Resource Include="box2.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\СхемаБД.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\Меню.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\УправлениеПользователями.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\НовыйПользователь.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\ГрафикГрузовыхМест.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\ГрафикТары.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
